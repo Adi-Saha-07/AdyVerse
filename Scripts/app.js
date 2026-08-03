@@ -307,21 +307,44 @@ function reveal() {
 window.addEventListener('scroll', reveal);
 
 // --- Contact Form Submission (Mock) ---
-const contactForm = document.getElementById('contactForm');
+const contactForm = document.getElementById("contactForm");
+
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        // Here you would normally handle the form submission (e.g., via Fetch API to Formspree)
-        const btn = contactForm.querySelector('button');
+
+        const btn = contactForm.querySelector("button");
         const originalText = btn.innerHTML;
 
-        btn.innerHTML = 'Message Sent <i class="fas fa-check"></i>';
-        btn.style.background = 'linear-gradient(135deg, #00ff88, #00cc66)';
+        btn.disabled = true;
+        btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+
+        try {
+            const response = await fetch(contactForm.action, {
+                method: "POST",
+                body: new FormData(contactForm),
+                headers: {
+                    Accept: "application/json"
+                }
+            });
+
+            if (response.ok) {
+                contactForm.reset();
+                btn.innerHTML = 'Message Sent <i class="fas fa-check"></i>';
+                btn.style.background = "linear-gradient(135deg, #00ff88, #00cc66)";
+            } else {
+                btn.innerHTML = 'Failed to Send <i class="fas fa-times"></i>';
+                btn.style.background = "#ff2b2b";
+            }
+        } catch (error) {
+            btn.innerHTML = 'Network Error <i class="fas fa-wifi"></i>';
+            btn.style.background = "#ff2b2b";
+        }
 
         setTimeout(() => {
-            contactForm.reset();
+            btn.disabled = false;
             btn.innerHTML = originalText;
-            btn.style.background = '';
+            btn.style.background = "";
         }, 3000);
     });
 }

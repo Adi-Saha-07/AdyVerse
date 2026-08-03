@@ -758,29 +758,37 @@
                     </div>
 
                     <div class="contact-form-container glass-card reveal-slide-right">
-                        <form action="https://formspree.io/f/mgoggjwj" method="POST" class="contact-form"
-                            id="contactForm">
+                        <form action="https://formspree.io/f/mgoggjwj" method="POST" id="contactForm"
+                            class="contact-form">
+
                             <div class="form-group grid">
                                 <div class="form-control">
-                                    <input type="text" name="First Name" id="firstName" placeholder="First Name"
+                                    <input type="text" name="first_name" id="firstName" placeholder="First Name"
                                         required>
                                 </div>
+
                                 <div class="form-control">
-                                    <input type="text" name="Last Name" id="lastName" placeholder="Last Name" required>
+                                    <input type="text" name="last_name" id="lastName" placeholder="Last Name" required>
                                 </div>
                             </div>
+
                             <div class="form-control">
-                                <input type="email" name="Email" id="email" placeholder="Email Address" required>
+                                <input type="email" name="email" id="email" placeholder="Email Address" required>
                             </div>
+
                             <div class="form-control">
-                                <input type="text" name="Subject" id="subject" placeholder="Subject" required>
+                                <input type="text" name="subject" id="subject" placeholder="Subject" required>
                             </div>
+
                             <div class="form-control">
-                                <textarea id="message" name="Message" cols="30" rows="6" placeholder="Your Message"
+                                <textarea name="message" id="message" rows="6" placeholder="Your Message"
                                     required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Send Message <i
-                                    class="fas fa-paper-plane"></i></button>
+
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Send Message <i class="fas fa-paper-plane"></i>
+                            </button>
+
                         </form>
                     </div>
                 </div>

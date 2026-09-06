@@ -900,7 +900,7 @@ img {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
-   8. NUMBERS / JOURNEY STATS
+   8. NUMBERS / JOURNEY STATS — 3D FLIP REVEAL
    ────────────────────────────────────────────────────────────────────────── */
 .stats-editorial-grid {
     display: grid;
@@ -908,21 +908,82 @@ img {
     gap: 20px;
 }
 
+/* Flip container — perspective lives here */
 .stat-box {
-    position: relative;
-    padding: 36px 30px;
+    perspective: 900px;
+    min-height: 200px;
     border-radius: var(--r-card);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-hairline);
+    /* no background/border — the faces carry those */
+}
+
+/* Inner wrapper that does the actual rotation */
+.stat-flip-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 0.72s cubic-bezier(0.45, 0, 0.15, 1);
+    border-radius: var(--r-card);
+}
+
+/* Flipped state — front face becomes visible */
+.stat-box.stat-flipped .stat-flip-inner {
+    transform: rotateY(180deg);
+}
+
+/* Shared face styles */
+.stat-face {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--r-card);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    padding: 36px 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 200px;
+}
+
+/* ── BACK FACE — black card shown first ── */
+.stat-back {
+    background: var(--bg-dark);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transform: rotateY(0deg);
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.stat-back-index {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.stat-back-label {
+    font-family: var(--font-headline);
+    font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+/* ── FRONT FACE — white stat card (already 180° pre-rotated so it hides initially) ── */
+.stat-front {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-hairline);
+    transform: rotateY(180deg);
     transition: transform 0.3s var(--ease-editorial), box-shadow 0.3s ease;
 }
 
-.stat-box:hover {
-    transform: translateY(-4px);
+.stat-box.stat-flipped .stat-front:hover {
+    transform: rotateY(180deg) translateY(-4px);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
 }
 

@@ -236,48 +236,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ──────────────────────────────────────────────────────────────────────
-       5. COUNTER ANIMATION FOR METRICS
+       5. COUNTER ANIMATION — handled by Section 10 (Stat Flip Reveal)
        ────────────────────────────────────────────────────────────────────── */
-    function initCounters() {
-        const counters = document.querySelectorAll('.counter');
-        counters.forEach(counter => {
-            const target = parseFloat(counter.getAttribute('data-target'));
-            const isFloat = !Number.isInteger(target);
-            let current = 0;
-            const duration = 1600; // ms
-            const startTime = performance.now();
-
-            function updateCounter(now) {
-                const elapsed = now - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-                // Ease out expo
-                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-                current = target * easeProgress;
-
-                counter.textContent = isFloat ? current.toFixed(1) : Math.floor(current);
-
-                if (progress < 1) {
-                    requestAnimationFrame(updateCounter);
-                } else {
-                    counter.textContent = isFloat ? target.toFixed(1) : target;
-                }
-            }
-            requestAnimationFrame(updateCounter);
-        });
-    }
-
-    const journeySection = document.getElementById('journey');
-    if (journeySection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    initCounters();
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.3 });
-        observer.observe(journeySection);
-    }
+    // Counters are now triggered after the flip animation completes (see Section 10).
 
 
     /* ──────────────────────────────────────────────────────────────────────
@@ -394,8 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
         '.dock-left',
         '.dock-right',
 
-        /* Journey / Stats */
-        '.stats-editorial-grid .stat-box',
+        /* Journey / Stats — handled separately via flip reveal */
         '.editorial-header',
 
         /* Education */
@@ -448,6 +408,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
+
+    /* ──────────────────────────────────────────────────────────────────────
+       10. STAT CARDS — STAGGERED FLIP REVEAL
+       Cards show black back face first, then flip one-by-one to front.
+       ────────────────────────────────────────────────────────────────────── */
+    const statBoxes = document.querySelectorAll('.stat-box');
+
+    if (statBoxes.length) {
+        const flipObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                // Trigger each card flip sequentially with 200ms stagger
+                statBoxes.forEach((box, i) => {
+                    setTimeout(() => {
+                        box.classList.add('stat-flipped');
+                    }, i * 200);
+                });
+
+                // Start counters after all cards have flipped
+                const totalFlipTime = (statBoxes.length - 1) * 200 + 720;
+                setTimeout(() => {
+                    document.querySelectorAll('.counter').forEach(counter => {
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        const isDecimal = target % 1 !== 0;
+                        const duration = 1200;
+                        const start = performance.now();
+
+                        const tick = (now) => {
+                            const elapsed = now - start;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const eased = 1 - Math.pow(1 - progress, 3);
+                            const current = eased * target;
+                            counter.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+                            if (progress < 1) requestAnimationFrame(tick);
+                            else counter.textContent = isDecimal ? target.toFixed(1) : target;
+                        };
+                        requestAnimationFrame(tick);
+                    });
+                }, totalFlipTime);
+
+                flipObserver.unobserve(entry.target); // trigger once
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        // Observe the grid container so all 4 cards flip together on entry
+        const statsGrid = document.querySelector('.stats-editorial-grid');
+        if (statsGrid) flipObserver.observe(statsGrid);
     }
 
 }); // End DOMContentLoaded

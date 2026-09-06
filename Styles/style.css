@@ -974,17 +974,17 @@ img {
     letter-spacing: -0.02em;
 }
 
-/* ── FRONT FACE — white stat card (already 180° pre-rotated so it hides initially) ── */
+/* ── FRONT FACE — black card (same as back, stays black after flip) ── */
 .stat-front {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-hairline);
+    background: var(--bg-dark);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transform: rotateY(180deg);
     transition: transform 0.3s var(--ease-editorial), box-shadow 0.3s ease;
 }
 
 .stat-box.stat-flipped .stat-front:hover {
     transform: rotateY(180deg) translateY(-4px);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
 }
 
 .stat-number-wrap {
@@ -995,19 +995,19 @@ img {
     font-size: clamp(3.2rem, 5vw, 4.5rem);
     line-height: 0.95;
     letter-spacing: -0.04em;
-    color: var(--text-primary);
+    color: #ffffff;
 }
 
 .stat-plus {
     font-size: 2.2rem;
     margin-left: 2px;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.45);
 }
 
 .stat-caption {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.65);
     margin-top: 14px;
 }
 
@@ -1018,7 +1018,7 @@ img {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.35);
 }
 
 /* ──────────────────────────────────────────────────────────────────────────

@@ -378,4 +378,76 @@ document.addEventListener('DOMContentLoaded', () => {
     const yearEl = document.getElementById('currentYear');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+
+    /* ──────────────────────────────────────────────────────────────────────
+       9. SCROLL REVEAL — IntersectionObserver
+       Targets major content blocks and fades + slides them up as they
+       enter the viewport. No HTML edits required.
+       ────────────────────────────────────────────────────────────────────── */
+    const REVEAL_SELECTORS = [
+        /* Hero */
+        '.hero-headline-wrap',
+        '.hero-meta-bar',
+        '.hero-mobile-photo-card',
+
+        /* About */
+        '.dock-left',
+        '.dock-right',
+
+        /* Journey / Stats */
+        '.stats-editorial-grid .stat-box',
+        '.editorial-header',
+
+        /* Education */
+        '.edu-card',
+
+        /* Skills */
+        '.skills-panel',
+        '.skills-canvas-card',
+
+        /* Projects */
+        '.project-editorial-card',
+
+        /* Credentials */
+        '.cert-card',
+
+        /* Leadership */
+        '.leadership-editorial-card',
+
+        /* Contact */
+        '.contact-glass-card',
+        '.contact-info-panel',
+
+        /* Footer */
+        '.footer-big-phrase',
+        '.footer-contact-details',
+    ];
+
+    // Mark elements as .reveal (hidden) — skip if reduced-motion is preferred
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!prefersReduced) {
+        REVEAL_SELECTORS.forEach(sel => {
+            document.querySelectorAll(sel).forEach((el, i) => {
+                el.classList.add('reveal');
+                // Slight stagger for siblings (capped at 300ms)
+                el.style.setProperty('--reveal-delay', `${Math.min(i * 60, 300)}ms`);
+            });
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target); // reveal once
+                }
+            });
+        }, {
+            threshold: 0.12,          // 12% of element visible triggers reveal
+            rootMargin: '0px 0px -40px 0px'  // slight bottom offset
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    }
+
 }); // End DOMContentLoaded

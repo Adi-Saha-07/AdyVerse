@@ -4,171 +4,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AdyVerse</title>
+    <title>Adittya Saha — Software & AI/ML Engineer · AdyVerse</title>
+    <meta name="description"
+        content="Personal portfolio of Adittya (Adi) Saha, aspiring AI/ML Engineer and CS student building modern, intelligent digital experiences.">
     <link rel="apple-touch-icon" sizes="180x180" href="Pictures/adytab.png">
     <link rel="icon" type="image/png" sizes="32x32" href="Pictures/adytab.png">
     <link rel="icon" type="image/png" sizes="16x16" href="Pictures/adytab.png">
-    <meta name="description"
-        content="Personal portfolio of Adittya (Adi) Saha, a passionate AI/ML Engineer and CS student.">
+
+    <!-- Modern Editorial Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="Styles/style.css">
+
+    <!-- TagCanvas for interactive skill sphere -->
+    <script src="https://www.goat1000.com/tagcanvas.min.js"></script>
+
+    <link rel="stylesheet" href="Styles/style.css?v=5.1">
 </head>
 
-<script src="https://www.goat1000.com/tagcanvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<body class="theme-monochrome">
 
-<body>
+    <!-- Subtle Paper Noise Texture -->
+    <div class="grain-overlay" aria-hidden="true"></div>
 
+    <!-- Scroll Progress Indicator -->
     <div id="scroll-progress"></div>
 
-    <!-- Profile Popup -->
-    <div class="profile-popup" id="profilePopup">
-        <div class="popup-card">
-            <span class="close-popup">&times;</span><br>
+    <!-- ─── iOS 27 STYLE LIQUID GLASS FLOATING HEADER ─── -->
+    <header class="ios-glass-island" id="mainHeader">
+        <div class="island-capsule">
+            <a href="#hero" class="island-brand">
+                <span class="island-dot"></span>
+                <span class="brand-text">AdyVerse</span>
+            </a>
 
-            <p>Hey I'm Adi</p>
-            <p>You’ve entered AdyVerse <br> Explore about me</p>
+            <nav class="island-nav" id="islandNav">
+                <a href="#hero" class="nav-item active">Home</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#journey" class="nav-item">Metrics</a>
+                <a href="#education" class="nav-item">Education</a>
+                <a href="#skills" class="nav-item">Skills</a>
+                <a href="#projects" class="nav-item">Projects</a>
+                <a href="#credentials" class="nav-item">Credentials</a>
+                <a href="#contact" class="nav-item">Contact</a>
+            </nav>
 
-
-        </div>
-    </div>
-
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-            <span>Loading AdyVerse...</span>
-        </div>
-    </div>
-
-    <!-- Navigation -->
-    <header class="header" id="header">
-        <nav class="navbar container">
-            <a href="#" class="logo">Ady<span>Verse</span></a>
-
-            <div class="nav-menu" id="nav-menu">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="#journey" class="nav-link">Journey</a></li>
-                    <li class="nav-item"><a href="#education" class="nav-link">Education</a></li>
-                    <li class="nav-item"><a href="#skills" class="nav-link">Skills</a></li>
-                    <li class="nav-item"><a href="#projects" class="nav-link">Projects</a></li>
-                    <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-                <div class="nav-close" id="nav-close">
-                    <i class="fas fa-times"></i>
-                </div>
+            <div class="island-actions">
+                <a href="Assets/Adittya Saha's CV.pdf" download class="island-cv-btn">
+                    <span>CV</span>
+                    <i class="fas fa-arrow-down"></i>
+                </a>
+                <button class="island-menu-toggle" id="islandToggle" aria-label="Toggle navigation menu">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </button>
             </div>
+        </div>
 
-            <div class="nav-toggle" id="nav-toggle">
-                <i class="fas fa-bars"></i>
+        <!-- iOS Glass Mobile Menu Dropdown -->
+        <div class="ios-glass-drawer" id="glassDrawer">
+            <div class="drawer-links">
+                <a href="#hero" class="drawer-item"><i class="fas fa-home"></i> Home</a>
+                <a href="#about" class="drawer-item"><i class="fas fa-user"></i> About</a>
+                <a href="#journey" class="drawer-item"><i class="fas fa-chart-line"></i> Journey & Metrics</a>
+                <a href="#education" class="drawer-item"><i class="fas fa-graduation-cap"></i> Education</a>
+                <a href="#skills" class="drawer-item"><i class="fas fa-layer-group"></i> Skills</a>
+                <a href="#projects" class="drawer-item"><i class="fas fa-code-branch"></i> Projects</a>
+                <a href="#credentials" class="drawer-item"><i class="fas fa-award"></i> Credentials</a>
+                <a href="#contact" class="drawer-item"><i class="fas fa-paper-plane"></i> Contact</a>
             </div>
-        </nav>
+            <div class="drawer-footer">
+                <a href="Assets/Adittya Saha's CV.pdf" download class="btn-pill btn-pill-dark btn-full">
+                    Download Official CV <i class="fas fa-download"></i>
+                </a>
+            </div>
+        </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="main">
+    <main>
 
-        <section class="home section" id="home">
-            <div class="hero-bg">
-                <span class="hero-orb orb-1"></span>
-                <span class="hero-orb orb-2"></span>
-                <span class="grid-lines"></span>
+        <!-- Shared sticky stage: hero + flip card + about share same scroll context -->
+        <div class="hero-about-stage">
+
+            <!-- ══════════════════════════════════════════════
+             HERO SECTION
+        ══════════════════════════════════════════════ -->
+            <section class="editorial-hero" id="hero">
+                <div class="hero-canvas-inner container">
+
+                    <!-- Floating Ambient Chrome Stars / Badges -->
+                    <div class="floating-glyph glyph-star" aria-hidden="true">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M50 0 C52 35 65 48 100 50 C65 52 52 65 50 100 C48 65 35 52 0 50 C35 48 48 35 50 0 Z"
+                                fill="url(#chromeGrad1)" />
+                            <path
+                                d="M50 8 C51.5 36 64 48.5 92 50 C64 51.5 51.5 64 50 92 C48.5 64 36 51.5 8 50 C36 48.5 48.5 36 50 8 Z"
+                                fill="#111111" />
+                            <path d="M49 14 C50 37 63 50 86 51" stroke="rgba(255,255,255,0.7)" stroke-width="2"
+                                stroke-linecap="round" />
+                            <defs>
+                                <linearGradient id="chromeGrad1" x1="0" y1="0" x2="100" y2="100"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#444444" />
+                                    <stop offset="0.4" stop-color="#888888" />
+                                    <stop offset="0.7" stop-color="#222222" />
+                                    <stop offset="1" stop-color="#a0a0a0" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <div class="floating-glyph glyph-bolt" aria-hidden="true">
+                        <svg viewBox="0 0 80 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M45 5 L10 65 L40 65 L30 115 L70 50 L40 50 Z" fill="url(#chromeGrad2)" stroke="#222"
+                                stroke-width="2" />
+                            <path d="M42 12 L18 61 L38 61 L32 100 L62 54 L38 54 Z" fill="#161616" />
+                            <path d="M41 15 L22 57" stroke="rgba(255,255,255,0.8)" stroke-width="2"
+                                stroke-linecap="round" />
+                            <defs>
+                                <linearGradient id="chromeGrad2" x1="0" y1="0" x2="80" y2="120"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#555" />
+                                    <stop offset="0.3" stop-color="#b0b0b0" />
+                                    <stop offset="0.6" stop-color="#1a1a1a" />
+                                    <stop offset="1" stop-color="#999" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <!-- Giant Editorial Headline -->
+                    <div class="hero-headline-wrap">
+                        <h1 class="hero-giant-title">
+                            <span class="giant-line word-software">SOFTWARE</span>
+                            <span class="giant-line word-engineer">ENGINEER</span>
+                        </h1>
+                    </div>
+
+                    <!-- Mobile-Only Hero Photo Card (displayed directly below headline on phone, matching user reference) -->
+                    <div class="hero-mobile-photo-card" aria-label="Adittya Saha Portrait">
+                        <div class="photo-shell">
+                            <img src="Pictures/ady.png" alt="Adittya Saha" class="card-img photo-color">
+                            <div class="photo-glow-border"></div>
+                        </div>
+                    </div>
+
+                    <!-- Editorial Meta Tags -->
+                    <div class="hero-meta-bar">
+                        <div class="meta-left">
+                            <span class="meta-year">&copy;2026</span>
+                        </div>
+
+                        <div class="meta-right">
+                            <span class="meta-tagline">/CREATING SINCE 2022</span>
+                            <div class="meta-actions">
+                                <a href="#projects" class="btn-pill btn-pill-dark">Explore Work</a>
+                                <a href="#contact" class="btn-pill btn-pill-dark">Say Hello</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- ───────────────────────────────────────────────────────────────
+             STICKY FLIP CARD — between hero and about
+             position:sticky keeps it visible as both sections scroll past.
+             JS rotates it B&W → color. dockSlot reserves matching space in about grid.
+        ─────────────────────────────────────────────────────────────── -->
+            <div class="sticky-photo-wrap" id="heroPhotoStage">
+                <div class="flip-portal" id="flipPortal">
+                    <div class="flip-3d-card" id="scrollFlipCard">
+                        <!-- Front: Noir B&W -->
+                        <div class="face face-front">
+                            <div class="photo-shell">
+                                <img src="Pictures/ady.png" alt="Adittya Saha - Monochrome" class="card-img photo-bw">
+                                <div class="photo-overlay-glass"></div>
+                            </div>
+                        </div>
+                        <!-- Back: Rich Full Color -->
+                        <div class="face face-back">
+                            <div class="photo-shell">
+                                <img src="Pictures/ady.png" alt="Adittya Saha - Full Color"
+                                    class="card-img photo-color">
+                                <div class="photo-glow-border"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="container home-container">
-                <div class="home-content">
-                    <div class="hero-badge reveal-up">
-                        <span class="badge-dot"></span>
-                        Hello, World! I'm
-                    </div>
+            <!-- ══════════════════════════════════════════════
+             ABOUT "Hey!" DOCKED SECTION
+        ══════════════════════════════════════════════ -->
+            <section class="flip-morph-stage" id="scrollFlipSection">
+                <div class="container stage-container">
 
-                    <p class="hero-intro reveal-up delay-1"></p>
-
-                    <h1 class="home-title reveal-up delay-2">
-                        Adittya <span>Saha</span>
-                    </h1>
-
-                    <h2 class="home-subtitle reveal-up delay-3">
-                        Aspiring AI/ML Engineer
-                    </h2>
-
-                    <p class="home-description reveal-up delay-4">
-                        I’m a Computer Science student passionate about AI/ML, Python development,
-                        web engineering, and building modern digital products with clean UI and
-                        real-world functionality.
-                    </p>
-
-                    <div class="hero-highlights reveal-up delay-5">
-                        <div class="highlight-card">
-                            <strong>8.2</strong>
-                            <span>Current CGPA</span>
-                        </div>
-                        <div class="highlight-card">
-                            <strong>AI/ML</strong>
-                            <span>Core Focus</span>
-                        </div>
-                        <div class="highlight-card">
-                            <strong>Python • Webdev</strong>
-                            <span>Tech Stack</span>
-                        </div>
-                    </div>
-
-                    <div class="home-buttons reveal-up delay-6">
-                        <a href="#projects" class="btn btn-primary">
-                            <i class="fas fa-rocket"></i>
-                            Explore Work
-                        </a>
-
-                        <a href="Assets/Adittya Saha's CV.pdf" download class="btn btn-outline">
-                            <i class="fas fa-download"></i>
-                            Download Resume
-                        </a>
-                    </div>
-
-                    <!-- <div class="hero-socials reveal-up delay-6">
-                        <a href="https://github.com/Adi-Saha-07" target="_blank" rel="noopener noreferrer"
-                            aria-label="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/adittya-saha-1913622ab?" target="_blank"
-                            rel="noopener noreferrer" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="mailto:adityaadisaha07@gmail.com" aria-label="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </div> -->
-                </div>
-
-                <div class="home-visual reveal-scale delay-4">
-                    <div class="img-wrapper glass-card">
-                        <div class="image-ring"></div>
-                        <img src="Pictures/ady.png" alt="Adittya Saha Profile" id="profile-img">
-
-                        <div class="floating-card card-top">
-                            <i class="fas fa-brain"></i>
-                            <div>
-                                <strong>AI/ML Learner</strong>
+                    <div class="about-docked-grid" id="about">
+                        <!-- Left Column -->
+                        <div class="dock-col dock-left">
+                            <h2 class="hey-title">Hey!</h2>
+                            <p class="dock-lead">
+                                I’m <strong>Adittya</strong>, an aspiring <strong>AI / ML Engineer</strong> &amp;
+                                software
+                                developer based in Delhi NCR / West Bengal, currently pursuing BCA at <strong>Jaypee
+                                    University Anoopshahr</strong>.
+                            </p>
+                            <div class="dock-badge-pills">
+                                <span class="pill-tag"><i class="fas fa-graduation-cap"></i> SGPA 9.1 · CGPA 8.2</span>
+                                <span class="pill-tag"><i class="fas fa-check-circle"></i> Available for work</span>
                             </div>
                         </div>
 
-                        <div class="floating-card card-bottom">
-                            <i class="fas fa-code"></i>
-                            <div>
-                                <strong>Developer</strong>
+                        <!-- Center spacer (where the flipped colorful card lands on desktop) -->
+                        <div class="dock-col dock-center-slot" id="dockSlot">
+                            <!-- Space reserved for the flipped colorful card -->
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="dock-col dock-right">
+                            <p class="dock-text">
+                                I specialize in Python development, machine learning, modern web engineering, and
+                                crafting
+                                clean, high-conversion digital experiences that combine aesthetic UI with real-world
+                                logic.
+                            </p>
+                            <p class="dock-text">
+                                Over the years, I’ve engineered and shipped interactive platforms, AI tools, and
+                                algorithms
+                                used by students and collaborators, while serving as <strong>Joint Secretary</strong> at
+                                Programming Hub Rossum.
+                            </p>
+                            <div class="dock-cta-wrap">
+                                <a href="#contact" class="link-arrow-pill">
+                                    <span>Get In Touch</span>
+                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                </a>
+                                <a href="Assets/Adittya Saha's CV.pdf" download class="link-simple">
+                                    <span>Download CV</span>
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div><!-- end .hero-about-stage -->
+
+        <!-- ══════════════════════════════════════════════
+             METRICS & NUMBERS (JOURNEY)
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial" id="journey">
+            <div class="container">
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 01 — NUMBERS</span>
+                    <h2 class="ed-title">Metrics That <em>Define Me</em></h2>
+                </div>
+
+                <div class="stats-editorial-grid">
+                    <div class="stat-box">
+                        <div class="stat-number-wrap">
+                            <span class="stat-num counter" data-target="6">0</span>
+                            <span class="stat-plus">+</span>
+                        </div>
+                        <p class="stat-caption">Projects Built &amp; Deployed</p>
+                        <span class="stat-index">01</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number-wrap">
+                            <span class="stat-num counter" data-target="8.2">0</span>
+                        </div>
+                        <p class="stat-caption">Current Cumulative CGPA (SGPA 9.1)</p>
+                        <span class="stat-index">02</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number-wrap">
+                            <span class="stat-num counter" data-target="4">0</span>
+                            <span class="stat-plus">+</span>
+                        </div>
+                        <p class="stat-caption">Industry Certifications</p>
+                        <span class="stat-index">03</span>
+                    </div>
+
+                    <div class="stat-box">
+                        <div class="stat-number-wrap">
+                            <span class="stat-num counter" data-target="3">0</span>
+                            <span class="stat-plus">+</span>
+                        </div>
+                        <p class="stat-caption">Years Coding Experience</p>
+                        <span class="stat-index">04</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════
+             ACADEMIC BACKGROUND (EDUCATION)
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial bg-subtle" id="education">
+            <div class="container">
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 02 — EDUCATION</span>
+                    <h2 class="ed-title">Academic <em>Journey</em></h2>
+                </div>
+
+                <div class="edu-editorial-list">
+                    <div class="edu-card">
+                        <div class="edu-meta">
+                            <span class="edu-year">2024 – 2027</span>
+                            <span class="edu-status">Current · Sem 5</span>
+                        </div>
+                        <div class="edu-main">
+                            <h3 class="edu-degree">Bachelor of Computer Applications (BCA)</h3>
+                            <p class="edu-school">Jaypee University Anoopshahr · Bulandshahr, Delhi-NCR</p>
+                            <div class="edu-tags">
+                                <span>Specialization: Computer Science</span>
+                                <span>SGPA: 9.1</span>
+                                <span>CGPA: 8.2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="edu-card">
+                        <div class="edu-meta">
+                            <span class="edu-year">2022 – 2024</span>
+                            <span class="edu-status">Completed</span>
+                        </div>
+                        <div class="edu-main">
+                            <h3 class="edu-degree">Higher Secondary (Class 12th)</h3>
+                            <p class="edu-school">Jiaganj Raja Bijoy Singh Vidyamandir · WBCHSE Board</p>
+                            <div class="edu-tags">
+                                <span>Score: 80%</span>
+                                <span>Grade: A+</span>
+                                <span>Murshidabad, West Bengal</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="edu-card">
+                        <div class="edu-meta">
+                            <span class="edu-year">2015 – 2022</span>
+                            <span class="edu-status">Completed</span>
+                        </div>
+                        <div class="edu-main">
+                            <h3 class="edu-degree">Secondary High School (Class 10th)</h3>
+                            <p class="edu-school">Jiaganj Raja Bijoy Singh Vidyamandir · WBBSE Board</p>
+                            <div class="edu-tags">
+                                <span>Score: 46%</span>
+                                <span>Grade: B+</span>
+                                <span>Murshidabad, West Bengal</span>
                             </div>
                         </div>
                     </div>
@@ -176,688 +369,476 @@
             </div>
         </section>
 
-
-        <!-- About Section -->
-        <section class="about section" id="about">
+        <!-- ══════════════════════════════════════════════
+             SKILLS (CATEGORIZED + 3D SPHERE)
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial" id="skills">
             <div class="container">
-                <h2 class="section-title reveal-up">About <span>Me</span></h2>
-                <div class="about-container grid">
-                    <div class="about-data reveal-fade">
-                        <div class="glass-card">
-                            <p>
-                                I am <strong>Adittya (Adi) Saha</strong>, a passionate software developer who enjoys
-                                transforming ideas into real-world applications. Currently pursuing a Bachelor of
-                                Computer Applications (BCA) at Jaypee University Anoopshahr, I work with HTML, CSS,
-                                JavaScript, Python, C++, React.js, APIs, and modern development tools.
-                            </p>
-                            <br>
-                            <p>
-                                I believe in writing clean, efficient, and user-friendly code. Alongside technical
-                                development, I actively contribute to university activities as an influencer and
-                                collaborator. I enjoy sharing knowledge and constantly work on self-improvement.
-                            </p>
-                            <br>
-                            <p>
-                                My long-term goal is to become a highly skilled developer capable of creating impactful
-                                software products that solve real-world problems.
-                            </p>
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 03 — CAPABILITIES</span>
+                    <h2 class="ed-title">Technical <em>Stack</em></h2>
+                </div>
+
+                <div class="skills-split-layout">
+                    <!-- Left: Categorized Pill Groups -->
+                    <div class="skills-categories">
+                        <div class="skill-group">
+                            <h4 class="skill-cat-title"><i class="fas fa-terminal"></i> Programming Languages</h4>
+                            <div class="pill-cloud">
+                                <span>Python</span><span>JavaScript
+                                    (ES6+)</span><span>C</span><span>C++</span><span>R</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h4 class="skill-cat-title"><i class="fas fa-brain"></i> AI / ML &amp; Data Science</h4>
+                            <div class="pill-cloud">
+                                <span>Machine Learning</span><span>Deep Learning</span><span>Neural
+                                    Networks</span><span>NumPy</span><span>Pandas</span><span>Matplotlib</span><span>Seaborn</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h4 class="skill-cat-title"><i class="fas fa-laptop-code"></i> Frontend &amp; Development
+                                Tools</h4>
+                            <div class="pill-cloud">
+                                <span>React.js</span><span>UI/UX Design</span><span>Responsive Web</span><span>VS
+                                    Code</span><span>Git &amp; GitHub</span><span>Vercel</span><span>MS Excel</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-group">
+                            <h4 class="skill-cat-title"><i class="fas fa-microchip"></i> GenAI &amp; Agentic Tools</h4>
+                            <div class="pill-cloud">
+                                <span>ChatGPT</span><span>Claude</span><span>Gemini</span><span>Perplexity</span><span>Antigravity</span><span>Prompt
+                                    Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Interactive 3D Sphere -->
+                    <div class="skills-canvas-card">
+                        <div class="sphere-wrapper">
+                            <canvas id="skillCanvas" width="460" height="460">
+                                Your browser does not support HTML5 Canvas.
+                            </canvas>
+                            <div id="tags" style="display:none;">
+                                <ul>
+                                    <li><a href="#">Python</a></li>
+                                    <li><a href="#">JavaScript</a></li>
+                                    <li><a href="#">Machine Learning</a></li>
+                                    <li><a href="#">C++</a></li>
+                                    <li><a href="#">Deep Learning</a></li>
+                                    <li><a href="#">React.js</a></li>
+                                    <li><a href="#">NumPy</a></li>
+                                    <li><a href="#">Pandas</a></li>
+                                    <li><a href="#">Matplotlib</a></li>
+                                    <li><a href="#">Seaborn</a></li>
+                                    <li><a href="#">MySQL</a></li>
+                                    <li><a href="#">GitHub</a></li>
+                                    <li><a href="#">VS Code</a></li>
+                                    <li><a href="#">Vercel</a></li>
+                                    <li><a href="#">ChatGPT</a></li>
+                                    <li><a href="#">Claude</a></li>
+                                    <li><a href="#">Gemini</a></li>
+                                    <li><a href="#">Neural Networks</a></li>
+                                    <li><a href="#">HTML5</a></li>
+                                    <li><a href="#">CSS3</a></li>
+                                    <li><a href="#">UI/UX</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!--Journey-->
-        <section class="stats section" id="journey">
-
+        <!-- ══════════════════════════════════════════════
+             FEATURED PROJECTS
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial bg-subtle" id="projects">
             <div class="container">
-
-                <div class="stats-heading">
-                    <span>MY JOURNEY</span>
-                    <h2>Numbers That Define Me</h2>
-                    <p>Building skills, projects and experience one step at a time.</p>
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 04 — PORTFOLIO</span>
+                    <h2 class="ed-title">Featured <em>Work</em></h2>
                 </div>
 
-                <div class="stats-grid">
+                <div class="projects-editorial-grid">
 
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-rocket"></i>
+                    <!-- Project 1: AdyVerse -->
+                    <article class="project-editorial-card featured-wide">
+                        <div class="proj-media-side">
+                            <div class="proj-badge">Featured</div>
+                            <img src="Pictures/Projects/p1.png" alt="AdyVerse Website Preview" class="proj-cover-img">
                         </div>
-
-                        <h2 class="counter" data-target="6">0</h2>
-
-                        <p>Projects Built</p>
-
-                        <span class="stat-bg">01</span>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-
-                        <h2 class="counter" data-target="8.2">0</h2>
-
-                        <p>Current CGPA</p>
-
-                        <span class="stat-bg">02</span>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-award"></i>
-                        </div>
-
-                        <h2 class="counter" data-target="4">0</h2>
-
-                        <p>Certificates</p>
-
-                        <span class="stat-bg">03</span>
-                    </div>
-
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-
-                        <h2 class="counter" data-target="3">0</h2>
-
-                        <p>Years Coding</p>
-
-                        <span class="stat-bg">04</span>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- Education Section -->
-        <section class="education section" id="education">
-            <div class="container">
-                <h2 class="section-title reveal-up">Academic <span>Background</span></h2>
-                <div class="timeline">
-                    <!-- BCA -->
-                    <div class="timeline-item reveal-slide-left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content glass-card">
-                            <div class="timeline-date">2024 - 2027</div>
-                            <h3 class="timeline-title">Bachelor of Computer Applications (BCA)</h3>
-                            <p class="timeline-institution">Jaypee University Anoopshahr</p>
-                            <ul class="timeline-details">
-                                <li><strong>Specialization:</strong> Computer Science</li>
-                                <li><strong>Current Semester:</strong> 5th</li>
-                                <li><strong>SGPA:</strong> 9.1 | <strong>CGPA:</strong> 8.2 </li>
-                                <li><strong>Location:</strong> Delhi-NCR, Bulandshahr, UP</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- 12th -->
-                    <div class="timeline-item reveal-slide-right">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content glass-card">
-                            <div class="timeline-date">2022 - 2024</div>
-                            <h3 class="timeline-title">Higher Secondary (12th)</h3>
-                            <p class="timeline-institution">Jiaganj Raja Bijoy Singh Vidyamandir</p>
-                            <ul class="timeline-details">
-                                <li><strong>Board:</strong> WBCHSE</li>
-                                <li><strong>Percentage:</strong> 80%</li>
-                                <li><strong>Grade:</strong> A+</li>
-                                <li><strong>Location:</strong> Jiaganj, Murshidabad, WB</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- 10th -->
-                    <div class="timeline-item reveal-slide-left">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content glass-card">
-                            <div class="timeline-date">2015 - 2022</div>
-                            <h3 class="timeline-title">High School (10th)</h3>
-                            <p class="timeline-institution">Jiaganj Raja Bijoy Singh Vidyamandir</p>
-                            <ul class="timeline-details">
-                                <li><strong>Board:</strong> WBBSE</li>
-                                <li><strong>Percentage:</strong> 46%</li>
-                                <li><strong>Grade:</strong> B+</li>
-                                <li><strong>Location:</strong> Jiaganj, Murshidabad, WB</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="skills section" id="skills">
-            <div class="container">
-                <h2 class="section-title reveal-up">My <span>Skills</span></h2>
-                <div class="skills-container glass-card reveal-up delay-1">
-                    <div class="sphere-container">
-                        <canvas id="skillCanvas" width="500" height="500">
-                            Your browser does not support canvas.
-                        </canvas>
-                        <div id="tags">
-                            <ul>
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">CSS3</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">Python</a></li>
-                                <li><a href="#">C</a></li>
-                                <li><a href="#">C++</a></li>
-                                <li><a href="#">R</a></li>
-                                <li><a href="#">NumPy</a></li>
-                                <li><a href="#">Pandas</a></li>
-                                <li><a href="#">Matplotlib</a></li>
-                                <li><a href="#">Seaborn</a></li>
-                                <li><a href="#">MySQL</a></li>
-                                <li><a href="#">MS Excel</a></li>
-                                <li><a href="#">GitHub</a></li>
-                                <li><a href="#">VS Code</a></li>
-                                <li><a href="#">Antigravity</a></li>
-                                <li><a href="#">Vercel</a></li>
-                                <li><a href="#">ChatGPT</a></li>
-                                <li><a href="#">Gemini</a></li>
-                                <li><a href="#">Claude</a></li>
-                                <li><a href="#">Perplexity</a></li>
-                                <li><a href="#">AI</a></li>
-                                <li><a href="#">Machine Learning</a></li>
-                                <li><a href="#">Problem Solving</a></li>
-                                <li><a href="#">UI/UX Design</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <!-- Projects Section -->
-        <section class="projects section" id="projects">
-            <div class="container">
-                <h2 class="section-title reveal-up">Featured <span>Projects</span></h2>
-                <div class="projects-grid">
-
-
-
-                    <div class="project-card glass-card reveal-up">
-                        <div class="project-img">
-                            <div class="project-placeholder">
-                                DeepScan
-                                <!-- <img src="Pictures/Projects/deepscan.png" alt="DeepScan Project"> -->
-                            </div>
-                        </div>
-
-                        <div class="project-content">
-                            <h3 class="project-title">DeepScan – AI Resume Screener & ATS Analyzer</h3>
-
-                            <p class="project-desc">
-                                An intelligent AI-powered resume screening and ATS optimization tool built with
-                                Python, Flask, Scikit-Learn, spaCy, and NLTK. DeepScan analyzes PDF and DOCX
-                                resumes against target job descriptions, predicts professional domains,
-                                calculates semantic job-match scores, identifies missing keywords, and detects
-                                formatting issues that may cause ATS parsing failures.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>Python</span>
-                                <span>Flask</span>
-                                <span>Scikit-Learn</span>
-                                <span>spaCy</span>
-                                <span>NLTK</span>
-                                <span>JavaScript</span>
-                                <span>HTML5</span>
-                                <span>CSS3</span>
-                            </div>
-
-                            <div class="project-buttons">
-                                <a href="https://deepscan-d6em.onrender.com/" target="_blank" class="project-btn">
-                                    <i class="fas fa-globe"></i> Visit Website
-                                </a>
-
-                                <a href="https://github.com/Adi-Saha-07/DeepScan" target="_blank"
-                                    class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <!--Project-->
-                    <div class="project-card glass-card reveal-up">
-                        <div class="project-img">
-                            <div class="project-placeholder">
-                                DeepThink-Gen2
-                                <!-- <img src="Pictures/Projects/deepthink.png" alt="DeepThink Project"> -->
-                            </div>
-                        </div>
-
-                        <div class="project-content">
-                            <h3 class="project-title">DeepThink Gen2 – AI Personality Analyzer</h3>
-
-                            <p class="project-desc">
-                                An AI-powered, privacy-first personality analysis web application built with
-                                Python, Flask, and Google Gemini API. Users can complete multi-category
-                                personality assessments and receive personalized AI-generated insights,
-                                while all responses remain session-based with zero permanent data storage.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>Python</span>
-                                <span>Flask</span>
-                                <span>JavaScript</span>
-                                <span>HTML5</span>
-                                <span>CSS3</span>
-                                <span>Google Gemini API</span>
-                            </div>
-
-                            <div class="project-buttons">
-                                <a href="https://deepthinkgen2.vercel.app/" target="_blank" class="project-btn">
-                                    <i class="fas fa-globe"></i> Visit Website
-                                </a>
-                                <a href="https://github.com/Adi-Saha-07/DeepThink-Gen2" target="_blank"
-                                    class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!--Project 1-->
-
-                    <div class="project-card glass-card reveal-up">
-                        <div class="project-img">
-                            <div class="project-placeholder">
-                                GradeSync
-                                <!-- <img src="Pictures/Projects/gradesync.png" alt="GradeSync Project"> -->
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">GradeSync - Academic Performance Tracker</h3>
-                            <p class="project-desc">
-                                A desktop application for managing academic records, calculating SGPA/CGPA,
-                                visualizing performance trends, and exporting reports through an intuitive
-                                interface with MySQL database integration.
-                            </p>
-
-                            <div class="project-tags">
-                                <span>Python</span>
-                                <span>Tkinter</span>
-                                <span>MySQL</span>
-                                <span>Pandas</span>
-                                <span>Matplotlib</span>
-                                <span>OpenPyXL</span>
-                            </div>
-
-                            <div class="project-buttons">
-                                <a href="https://github.com/Adi-Saha-07/GradeSync" target="_blank"
-                                    class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="project-card glass-card reveal-up">
-                        <div class="project-img">
-                            <div class="project-placeholder">AdyVerse
-                                <!-- <img src="Pictures/Projects/p1.png" alt="project1"> -->
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">AdyVerse Portfolio Website</h3>
-                            <p class="project-desc">Personal portfolio website built with HTML, CSS, and JavaScript.
-                                Features a fully responsive modern UI design, interactive animations, and a dark
-                                futuristic theme.</p>
-                            <div class="project-tags">
+                        <div class="proj-info-side">
+                            <span class="proj-index-num">01 / 04</span>
+                            <div class="proj-stack-pills">
                                 <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
                             </div>
-                            <div class="project-buttons">
-                                <a href="https://adyverse.vercel.app/" target="_blank" class="project-btn">
-                                    <i class="fas fa-globe"></i> Visit Website
+                            <h3 class="proj-name">AdyVerse Portfolio</h3>
+                            <p class="proj-summary">
+                                High-performance personal brand and portfolio web application featuring modern editorial
+                                typography, dynamic animations, custom cursor, 3D interactive skill sphere, and clean
+                                responsive layout.
+                            </p>
+                            <div class="proj-button-row">
+                                <a href="https://adyverse.vercel.app/" target="_blank" rel="noopener"
+                                    class="btn-pill btn-pill-dark">
+                                    <i class="fas fa-globe"></i> Live Preview
                                 </a>
-                                <a href="https://github.com/Adi-Saha-07/Adi_Resume" target="_blank"
-                                    class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Project 3 -->
-                    <div class="project-card glass-card reveal-up delay-1">
-                        <div class="project-img">
-                            <div class="project-placeholder">DeepThink Gen1
-                                <!-- <img src="Pictures/Projects/p2.png" alt="project1"> -->
-                            </div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">DeepThink Gen1 – Personality Analyzer Website</h3>
-                            <p class="project-desc">AI-inspired personality analysis platform with an interactive
-                                questionnaire system, smooth animations, and a user-focused responsive design.</p>
-                            <div class="project-tags">
-                                <span>Web</span><span>UI/UX</span><span>Interactive</span>
-                            </div>
-                            <div class="project-buttons">
-                                <a href="https://deepthinkpa.vercel.app/" target="_blank" class="project-btn">
-                                    <i class="fas fa-globe"></i> Visit Website
-                                </a>
-                                <a href="https://github.com/Adi-Saha-07/DeepThink" target="_blank"
-                                    class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
+                                <a href="https://github.com/Adi-Saha-07/Adi_Resume" target="_blank" rel="noopener"
+                                    class="btn-pill btn-pill-ghost">
+                                    <i class="fab fa-github"></i> Source Code
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <!-- Project 4 -->
-                    <div class="project-card glass-card reveal-up delay-2">
-                        <div class="project-img">
-                            <div class="project-placeholder">Student MS</div>
+                    </article>
+
+                    <!-- Project 2: DeepThink -->
+                    <article class="project-editorial-card">
+                        <div class="proj-media-side">
+                            <img src="Pictures/Projects/p2.png" alt="DeepThink Analyzer Preview" class="proj-cover-img">
                         </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Student Management System</h3>
-                            <p class="project-desc">Python-based console application using JSON file storage. Features a
-                                menu-driven interface to add, update, delete, and manage student records.</p>
-                            <div class="project-tags">
-                                <span>Python</span><span>JSON</span><span>Console</span>
+                        <div class="proj-info-side">
+                            <span class="proj-index-num">02 / 04</span>
+                            <div class="proj-stack-pills">
+                                <span>AI Inspired</span><span>UI/UX</span><span>Interactive JS</span>
                             </div>
-                            <div class="project-buttons">
+                            <h3 class="proj-name">DeepThink — Personality Analyzer</h3>
+                            <p class="proj-summary">
+                                Interactive personality assessment platform equipped with an intuitive questionnaire,
+                                smooth step animations, dynamic score evaluation, and responsive design.
+                            </p>
+                            <div class="proj-button-row">
+                                <a href="https://deepthinkpa.vercel.app/" target="_blank" rel="noopener"
+                                    class="btn-pill btn-pill-dark">
+                                    <i class="fas fa-globe"></i> Live Demo
+                                </a>
+                                <a href="https://github.com/Adi-Saha-07/DeepThink" target="_blank" rel="noopener"
+                                    class="btn-pill btn-pill-ghost">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Project 3: Student Management System -->
+                    <article class="project-editorial-card">
+                        <div class="proj-media-side console-fallback">
+                            <div class="code-preview-box">
+                                <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+                                <code>$ python student_management.py<br>&gt; Loaded 120 records<br>&gt; CRUD operations ready.</code>
+                            </div>
+                        </div>
+                        <div class="proj-info-side">
+                            <span class="proj-index-num">03 / 04</span>
+                            <div class="proj-stack-pills">
+                                <span>Python</span><span>JSON Database</span><span>CLI Architecture</span>
+                            </div>
+                            <h3 class="proj-name">Student Management System</h3>
+                            <p class="proj-summary">
+                                Full-featured Python console application utilizing JSON file storage for persistent
+                                student records. Features menu-driven CRUD operations, data validation, and sorting
+                                algorithms.
+                            </p>
+                            <div class="proj-button-row">
                                 <a href="https://github.com/Adi-Saha-07/Python-Project/tree/main/Student's%20Data"
-                                    target="_blank" class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
+                                    target="_blank" rel="noopener" class="btn-pill btn-pill-ghost">
+                                    <i class="fab fa-github"></i> GitHub Repository
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <!-- Project 5 -->
-                    <div class="project-card glass-card reveal-up delay-3">
-                        <div class="project-img">
-                            <div class="project-placeholder">Quiz Game</div>
-                        </div>
-                        <div class="project-content">
-                            <h3 class="project-title">Quiz Game</h3>
-                            <p class="project-desc">An interactive question-answer gameplay project built in C++
-                                featuring a dynamic score calculation system.</p>
-                            <div class="project-tags">
-                                <span>C++</span><span>Logic</span><span>Game</span>
+                    </article>
+
+                    <!-- Project 4: Quiz Game -->
+                    <article class="project-editorial-card">
+                        <div class="proj-media-side console-fallback">
+                            <div class="code-preview-box">
+                                <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+                                <code>// C++ Engine<br>ScoreCalculation::evaluate();<br>std::cout &lt;&lt; "Score: 100/100";</code>
                             </div>
-                            <div class="project-buttons">
+                        </div>
+                        <div class="proj-info-side">
+                            <span class="proj-index-num">04 / 04</span>
+                            <div class="proj-stack-pills">
+                                <span>C++</span><span>Game Logic</span><span>Algorithms</span>
+                            </div>
+                            <h3 class="proj-name">Quiz Game Engine</h3>
+                            <p class="proj-summary">
+                                High-speed interactive question-answer engine written in C++ with dynamic score
+                                evaluation, randomized questions, and structured procedural logic.
+                            </p>
+                            <div class="proj-button-row">
                                 <a href="https://github.com/Adi-Saha-07/Cpp-Projects/blob/main/quiz_game.c%2B%2B"
-                                    target="_blank" class="project-btn github-btn">
-                                    <i class="fab fa-github"></i> GitHub Repo
+                                    target="_blank" rel="noopener" class="btn-pill btn-pill-ghost">
+                                    <i class="fab fa-github"></i> View C++ Code
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </article>
+
                 </div>
             </div>
         </section>
 
-        <!-- Gallery Section -->
-        <section class="gallery section" id="gallery">
+        <!-- ══════════════════════════════════════════════
+             CERTIFICATIONS & LEADERSHIP
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial" id="credentials">
             <div class="container">
-                <h2 class="section-title reveal-up">Certificates <span>Achievements</span></h2>
-
-                <h3 class="gallery-subtitle reveal-up">Certificates</h3>
-
-                <div class="container">
-
-
-                    <div class="gallery-grid">
-
-                        <!-- Python -->
-                        <div class="certificate-card glass-card reveal-scale">
-
-                            <div class="certificate-image">
-                                <img src="Pictures/Certificates/Python.jpg" alt="">
-                            </div>
-
-                            <div class="certificate-content">
-
-                                <h4>Python Programming</h4>
-
-                                <p class="certificate-provider">
-                                    GeeksforGeeks
-                                </p>
-
-                                <span class="certificate-date">
-                                    Issued • 2025
-                                </span>
-
-                                <a href="Pictures/Certificates/Python.jpg" target="_blank" class="certificate-btn">
-
-                                    <i class="fas fa-certificate"></i>
-                                    View Certificate
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                        <!-- Cyber Security -->
-                        <div class="certificate-card glass-card reveal-scale delay-1">
-
-                            <div class="certificate-image">
-                                <img src="Pictures/Certificates/CyberSecurity.jpg" alt="">
-                            </div>
-
-                            <div class="certificate-content">
-
-                                <h4>Introduction to Cyber Security</h4>
-
-                                <p class="certificate-provider">
-                                    Simplilearn
-                                </p>
-
-                                <span class="certificate-date">
-                                    12 December 2025
-                                </span>
-
-                                <a href="Pictures/Certificates/CyberSecurity.jpg" target="_blank"
-                                    class="certificate-btn">
-
-                                    <i class="fas fa-certificate"></i>
-                                    View Certificate
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                        <!-- ChatGPT -->
-                        <div class="certificate-card glass-card reveal-scale delay-2">
-
-                            <div class="certificate-image">
-                                <img src="Pictures/Certificates/ChatGPT.jpg" alt="">
-                            </div>
-
-                            <div class="certificate-content">
-
-                                <h4>OpenAI ChatGPT Master</h4>
-
-                                <p class="certificate-provider">
-                                    Udemy
-                                </p>
-
-                                <span class="certificate-date">
-                                    18 December 2025
-                                </span>
-
-                                <a href="Pictures/Certificates/ChatGPT.jpg" target="_blank" class="certificate-btn">
-
-                                    <i class="fas fa-certificate"></i>
-                                    View Certificate
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                        <!-- AI Era -->
-                        <div class="certificate-card glass-card reveal-scale delay-3">
-
-                            <div class="certificate-image">
-                                <img src="Pictures/Certificates/AIERA.jpg" alt="">
-                            </div>
-
-                            <div class="certificate-content">
-
-                                <h4>Critical Thinking in AI Era</h4>
-
-                                <p class="certificate-provider">
-                                    HP Foundation
-                                </p>
-
-                                <span class="certificate-date">
-                                    17 December 2025
-                                </span>
-
-                                <a href="Pictures/Certificates/AIERA.jpg" target="_blank" class="certificate-btn">
-
-                                    <i class="fas fa-certificate"></i>
-                                    View Certificate
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 05 — CREDENTIALS</span>
+                    <h2 class="ed-title">Certifications &amp; <em>Leadership</em></h2>
                 </div>
 
-                <h3 class="gallery-subtitle reveal-up" style="margin-top: 3rem;">Achievements</h3>
-                <div class="achievements-list reveal-up delay-1">
-                    <div class="achievement-item glass-card">
-                        <div class="achieve-icon"><i class="fas fa-award"></i></div>
-                        <div class="achieve-info">
-                            <h4>Joint Secretary</h4>
-                            <p>Programming Hub Rossum, Jaypee University Anoopshahr</p>
-                            <p>Aug 2025 - Aug 2026</p>
+                <!-- Certificates Grid -->
+                <div class="cert-editorial-grid">
+                    <div class="cert-tile">
+                        <div class="cert-preview">
+                            <img src="Pictures/Certificates/Python.jpg" alt="Python Programming Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <span class="cert-issuer">GeeksforGeeks</span>
+                            <h4 class="cert-title">Python Programming</h4>
+                            <span class="cert-date">Issued · 2025</span>
+                            <a href="Pictures/Certificates/Python.jpg" target="_blank" class="cert-view-link">
+                                View Certificate <i class="fas fa-external-link-alt"></i>
+                            </a>
                         </div>
                     </div>
-                    <!-- <div class="achievement-item glass-card">
-                        <div class="achieve-icon"><i class="fas fa-star"></i></div>
-                        <div class="achieve-info">
-                            <h4>Academic Performance Recognition</h4>
-                            <p>JIIT Noida</p>
+
+                    <div class="cert-tile">
+                        <div class="cert-preview">
+                            <img src="Pictures/Certificates/CyberSecurity.jpg" alt="Cyber Security Certificate">
                         </div>
-                    </div> -->
+                        <div class="cert-info">
+                            <span class="cert-issuer">Simplilearn</span>
+                            <h4 class="cert-title">Intro to Cyber Security</h4>
+                            <span class="cert-date">12 December 2025</span>
+                            <a href="Pictures/Certificates/CyberSecurity.jpg" target="_blank" class="cert-view-link">
+                                View Certificate <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="cert-tile">
+                        <div class="cert-preview">
+                            <img src="Pictures/Certificates/ChatGPT.jpg" alt="OpenAI ChatGPT Master Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <span class="cert-issuer">Udemy</span>
+                            <h4 class="cert-title">OpenAI ChatGPT Master</h4>
+                            <span class="cert-date">18 December 2025</span>
+                            <a href="Pictures/Certificates/ChatGPT.jpg" target="_blank" class="cert-view-link">
+                                View Certificate <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="cert-tile">
+                        <div class="cert-preview">
+                            <img src="Pictures/Certificates/AIERA.jpg" alt="Critical Thinking in AI Era Certificate">
+                        </div>
+                        <div class="cert-info">
+                            <span class="cert-issuer">HP Foundation</span>
+                            <h4 class="cert-title">Critical Thinking in AI Era</h4>
+                            <span class="cert-date">17 December 2025</span>
+                            <a href="Pictures/Certificates/AIERA.jpg" target="_blank" class="cert-view-link">
+                                View Certificate <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Leadership & Achievements Feature -->
+                <div class="leadership-editorial-card">
+                    <div class="leadership-badge-col">
+                        <div class="crown-icon"><i class="fas fa-shield-halved"></i></div>
+                        <span class="leadership-tag">LEADERSHIP ROLE</span>
+                    </div>
+                    <div class="leadership-body-col">
+                        <h3 class="role-title">Joint Secretary</h3>
+                        <p class="role-org">Programming Hub Rossum · Jaypee University Anoopshahr</p>
+                        <p class="role-tenure">Aug 2025 – Aug 2026</p>
+                        <p class="role-desc">
+                            Overseeing university coding workshops, spearheading collaborative hackathons, mentoring
+                            juniors in Python and problem solving, and driving tech initiatives across campus.
+                        </p>
+                        <div class="proof-photo-row">
+                            <a href="Pictures/Achivements/joint.jpg" target="_blank" class="proof-thumb"><img
+                                    src="Pictures/Achivements/joint.jpg" alt="Joint Secretary Rossum"></a>
+                            <a href="Pictures/Achivements/code2025.png" target="_blank" class="proof-thumb"><img
+                                    src="Pictures/Achivements/code2025.png" alt="Coding Event Rossum"></a>
+                            <a href="Pictures/Achivements/achivment1.jpg" target="_blank" class="proof-thumb"><img
+                                    src="Pictures/Achivements/achivment1.jpg" alt="Rossum Achievement"></a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section class="contact section" id="contact">
+        <!-- ══════════════════════════════════════════════
+             GET IN TOUCH (CONTACT WITH FORMSPREE)
+        ══════════════════════════════════════════════ -->
+        <section class="section-editorial bg-subtle" id="contact">
             <div class="container">
-                <h2 class="section-title reveal-up">Get In <span>Touch</span></h2>
-                <div class="contact-container grid">
-                    <div class="contact-info glass-card reveal-slide-left">
-                        <h3 class="contact-subtitle">Let's Connect</h3>
-                        <p class="contact-text">
-                            I'm currently looking for new opportunities.
-                            Whether you have a question or just want to say hi,
-                            I'll try my best to get back to you.
+                <div class="editorial-header">
+                    <span class="ed-tag">/ 06 — CONNECT</span>
+                    <h2 class="ed-title">Let’s Create Something <em>Together</em></h2>
+                </div>
+
+                <div class="contact-editorial-layout">
+
+                    <!-- Direct Info Side -->
+                    <div class="contact-info-block">
+                        <h3 class="ci-lead-title">Have an opportunity or an idea?</h3>
+                        <p class="ci-lead-desc">
+                            I’m actively looking for internships, collaborative software projects, and AI/ML engineering
+                            roles. Feel free to reach out directly through any channel!
                         </p>
 
-                        <div class="contact-list">
-                            <div class="contact-item">
-                                <i class="fas fa-phone-alt contact-icon"></i>
-                                <div>
-                                    <span><a href="tel:" class="a1">+91 XXXXXXXX43</a></span><br>
-                                    <span><a href="tel:" class="a1">+91 XXXXXXXX23</a></span>
-                                </div>
+                        <div class="ci-quick-details">
+                            <div class="ci-item">
+                                <span class="ci-label">Email</span>
+                                <a href="mailto:8824209033@mail.jaypeeu.ac.in"
+                                    class="ci-link">8824209033@mail.jaypeeu.ac.in</a>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-envelope contact-icon"></i>
-                                <div>
-                                    <span><a href="mailto:" class="a1">XXXXXXXXXXXXX07@gmail.com</a></span><br>
-                                    <span><a href="mailto:8824209033@mail.jaypeeu.ac.in"
-                                            class="a1">8824209033@mail.jaypeeu.ac.in</a></span>
-                                </div>
+
+                            <div class="ci-item">
+                                <span class="ci-label">Location</span>
+                                <span class="ci-text">Delhi NCR &amp; West Bengal, India</span>
                             </div>
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt contact-icon"></i>
-                                <div>
-                                    <span>Delhi NCR, Uttar Pradesh, India</span>
-                                </div>
+
+                            <div class="ci-item">
+                                <span class="ci-label">Availability</span>
+                                <span class="ci-text">🟢 Open for Work / Internships</span>
                             </div>
                         </div>
 
-                        <div class="contact-social">
-                            <a href="https://www.instagram.com/aditya_adi_saha?igsh=MTVhaTUxNGVodWlucQ=="
-                                class="social-link" title="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="https://www.facebook.com/share/1BhShULHUb/" class="social-link" title="Facebook"><i
-                                    class="fab fa-facebook-f"></i></a>
-                            <a href="https://github.com/Adi-Saha-07" class="social-link" title="GitHub"><i
-                                    class="fab fa-github"></i></a>
-                            <a href="https://www.linkedin.com/in/adittya-saha-1913622ab?" class="social-link"
-                                title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="ci-social-row">
+                            <a href="https://github.com/Adi-Saha-07" target="_blank" rel="noopener" class="soc-pill"
+                                title="GitHub">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="https://www.linkedin.com/in/adittya-saha-1913622ab" target="_blank" rel="noopener"
+                                class="soc-pill" title="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i> LinkedIn
+                            </a>
+                            <a href="https://www.instagram.com/aditya_adi_saha" target="_blank" rel="noopener"
+                                class="soc-pill" title="Instagram">
+                                <i class="fab fa-instagram"></i> Instagram
+                            </a>
+                            <a href="https://www.facebook.com/share/1BhShULHUb/" target="_blank" rel="noopener"
+                                class="soc-pill" title="Facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
                         </div>
                     </div>
 
-                    <div class="contact-form-container glass-card reveal-slide-right">
-                        <form action="https://formspree.io/f/mgoggjwj" method="POST" id="contactForm"
-                            class="contact-form">
-
-                            <div class="form-group grid">
-                                <div class="form-control">
-                                    <input type="text" name="first_name" id="firstName" placeholder="First Name"
+                    <!-- iOS Glass Contact Form -->
+                    <div class="contact-glass-card">
+                        <form action="https://formspree.io/f/mzzklloe" method="POST" id="editorialContactForm">
+                            <div class="form-double-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" name="First Name" placeholder="e.g. Alex"
                                         required>
                                 </div>
-
-                                <div class="form-control">
-                                    <input type="text" name="last_name" id="lastName" placeholder="Last Name" required>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" name="Last Name" placeholder="e.g. Smith" required>
                                 </div>
                             </div>
 
-                            <div class="form-control">
-                                <input type="email" name="email" id="email" placeholder="Email Address" required>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="Email" placeholder="alex@company.com" required>
                             </div>
 
-                            <div class="form-control">
-                                <input type="text" name="subject" id="subject" placeholder="Subject" required>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="Subject"
+                                    placeholder="Project collaboration / Internship" required>
                             </div>
 
-                            <div class="form-control">
-                                <textarea name="message" id="message" rows="6" placeholder="Your Message"
-                                    required></textarea>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="Message" rows="5"
+                                    placeholder="Tell me about your project or inquiry..." required></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block">
-                                Send Message <i class="fas fa-paper-plane"></i>
+                            <button type="submit" class="btn-pill btn-pill-dark btn-full" id="submitButton">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane"></i>
                             </button>
-
                         </form>
                     </div>
+
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-container">
-            <div class="footer-content">
-                <a href="#" class="footer-logo">Ady<span>Verse</span></a>
-                <!-- <p class="footer-desc">Crafting digital experiences with modern web technologies.</p> -->
+    <!-- ══════════════════════════════════════════════
+         EDITORIAL MAJD-STYLE FOOTER WITH "ADY" WATERMARK
+    ══════════════════════════════════════════════ -->
+    <footer class="editorial-footer-dark">
+        <div class="container footer-content-wrap">
+
+            <div class="footer-top-grid">
+                <!-- Left: Big 3-line statement -->
+                <div class="footer-statement-col">
+                    <h2 class="footer-big-phrase">
+                        Scaling<br>
+                        Intelligent AI<br>
+                        for Growth.
+                    </h2>
+                </div>
+
+                <!-- Middle: /Quick links with white pill buttons -->
+                <div class="footer-nav-col">
+                    <span class="f-col-tag">/Quick links</span>
+                    <div class="footer-pill-links">
+                        <a href="#hero" class="f-pill-btn">Home</a>
+                        <a href="#about" class="f-pill-btn">About Me</a>
+                        <a href="#skills" class="f-pill-btn">Skills</a>
+                        <a href="#projects" class="f-pill-btn">Works</a>
+                        <a href="#contact" class="f-pill-btn">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Right: /Contact -->
+                <div class="footer-contact-col">
+                    <span class="f-col-tag">/Contact</span>
+                    <div class="footer-contact-details">
+                        <a href="mailto:8824209033@mail.jaypeeu.ac.in"
+                            class="f-mail-link">8824209033@mail.jaypeeu.ac.in</a>
+                        <p class="f-location-text">Delhi NCR &amp; West Bengal, India</p>
+                    </div>
+                </div>
             </div>
-            <p class="footer-copy">&#169; <span id="year"></span> Adittya Saha. All rights reserved.</p>
+
+            <!-- Giant Watermark Name "ADY" (as in screenshot) -->
+            <div class="footer-giant-brand-wrap" aria-hidden="true">
+                <span class="footer-giant-name">ADY</span>
+            </div>
+
+            <!-- Footer Bottom Credits & Actions -->
+            <div class="footer-bottom-bar">
+                <p class="f-copy-text">©<span id="currentYear">2026</span> Adittya Saha · All rights reserved.</p>
+                <div class="footer-action-pills">
+                    <a href="Assets/Adittya Saha's CV.pdf" download class="f-action-chip">Download CV</a>
+                    <a href="#hero" class="f-action-chip">Back to top ↑</a>
+                </div>
+            </div>
+
         </div>
     </footer>
 
-    <!-- Custom JS -->
-    <script src="Scripts/app.js"></script>
+    <script src="Scripts/app.js?v=5.0"></script>
 </body>
 
 </html>

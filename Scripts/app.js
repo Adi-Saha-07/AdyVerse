@@ -1,361 +1,381 @@
-/* =========================================
-   AdyVerse Portfolio JavaScript
-   ========================================= */
-//Home
-document.addEventListener("DOMContentLoaded", () => {
-    const reveals = document.querySelectorAll(".reveal-up, .reveal-scale, .reveal-fade");
+/* ==========================================================================
+   AdyVerse — app.js (v4.0)
+   Editorial Monochrome + iOS 27 Liquid Glass + Scroll-Driven 3D Flip Engine
+   ========================================================================== */
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* ──────────────────────────────────────────────────────────────────────
+       1. SCROLL PROGRESS BAR
+       ────────────────────────────────────────────────────────────────────── */
+    const progressBar = document.getElementById('scroll-progress');
+    const updateScrollProgress = () => {
+        if (!progressBar) return;
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const pct = totalHeight > 0 ? (scrolled / totalHeight) * 100 : 0;
+        progressBar.style.width = `${pct}%`;
+    };
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
+
+    /* ──────────────────────────────────────────────────────────────────────
+       2. iOS 27 LIQUID GLASS HEADER & DRAWER
+       ────────────────────────────────────────────────────────────────────── */
+    const headerCapsule = document.querySelector('.island-capsule');
+    const islandToggle = document.getElementById('islandToggle');
+    const glassDrawer = document.getElementById('glassDrawer');
+    const navItems = document.querySelectorAll('.island-nav .nav-item');
+    const drawerItems = document.querySelectorAll('.drawer-item');
+
+    // Sticky shrink & elevation on scroll
+    window.addEventListener('scroll', () => {
+        if (!headerCapsule) return;
+        if (window.scrollY > 40) {
+            headerCapsule.style.transform = 'scale(0.98)';
+            headerCapsule.style.background = 'rgba(255, 255, 255, 0.85)';
+        } else {
+            headerCapsule.style.transform = 'scale(1)';
+            headerCapsule.style.background = 'rgba(255, 255, 255, 0.72)';
+        }
+    }, { passive: true });
+
+    // Drawer menu toggle
+    if (islandToggle && glassDrawer) {
+        islandToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            glassDrawer.classList.toggle('open');
+        });
+
+        // Close on outside click
+        document.addEventListener('click', (e) => {
+            if (!glassDrawer.contains(e.target) && !islandToggle.contains(e.target)) {
+                glassDrawer.classList.remove('open');
             }
         });
-    }, { threshold: 0.18 });
 
-    reveals.forEach((el) => observer.observe(el));
-
-    const profileImg = document.getElementById("profile-img");
-    const wrapper = document.querySelector(".glass-card");
-
-    if (profileImg && wrapper && window.innerWidth > 992) {
-        wrapper.addEventListener("mousemove", (e) => {
-            const rect = wrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const rotateY = ((x / rect.width) - 0.5) * 10;
-            const rotateX = ((y / rect.height) - 0.5) * -10;
-
-            profileImg.style.transform = `scale(1.03) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        wrapper.addEventListener("mouseleave", () => {
-            profileImg.style.transform = "scale(1) rotateX(0deg) rotateY(0deg)";
+        // Close drawer on link click
+        drawerItems.forEach(item => {
+            item.addEventListener('click', () => {
+                glassDrawer.classList.remove('open');
+            });
         });
     }
-});
 
+    // Active nav link spy on scroll
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+        sections.forEach(sec => {
+            const top = sec.offsetTop - 180;
+            const height = sec.offsetHeight;
+            const id = sec.getAttribute('id');
 
-
-/* ==========================
-   COUNT UP ANIMATION
-========================== */
-
-const counters = document.querySelectorAll(".counter");
-
-const startCounters = () => {
-
-    counters.forEach(counter => {
-
-        const target = +counter.getAttribute("data-target");
-
-        let count = 0;
-
-        const speed = target / 60;
-
-        const updateCount = () => {
-
-            if (count < target) {
-
-                count += speed;
-
-                if (target === 8) {
-                    counter.innerText = count.toFixed(1);
-                } else {
-                    counter.innerText = Math.ceil(count);
-                }
-
-                requestAnimationFrame(updateCount);
-
-            } else {
-
-                if (target === 8) {
-                    counter.innerText = "8.0";
-                } else {
-                    counter.innerText = target + "+";
-                }
-
+            if (scrollY >= top && scrollY < top + height) {
+                navItems.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                });
             }
-
-        };
-
-        updateCount();
-
-    });
-
-};
-
-const statsSection = document.querySelector(".stats");
-
-const observer = new IntersectionObserver(entries => {
-
-    if (entries[0].isIntersecting) {
-
-        startCounters();
-
-        observer.disconnect();
-
-    }
-
-}, { threshold: 0.4 });
-
-observer.observe(statsSection);
-
-
-//skill gloabe effect
-window.addEventListener("load", () => {
-
-    if (!window.TagCanvas) return;
-
-    try {
-
-        TagCanvas.Start("skillCanvas", "tags", {
-
-            textColour: "#ffffff",
-            textHeight: 24,
-
-            outlineColour: "transparent",
-
-            shadow: "#ff2b2b",
-            shadowBlur: 10,
-
-            depth: 0.8,
-
-            zoom: 1,
-
-            // Right → Left slow rotation
-            reverse: true,
-            initial: [0.08, 0],
-
-            maxSpeed: 0.02,
-            minSpeed: 0.01,
-
-            freezeActive: false,
-            freezeDecel: false,
-
-            decel: 1,
-
-            wheelZoom: false,
-            dragControl: false,
-
-            shuffleTags: false,
-
-            fadeIn: 1000,
-
-            noSelect: true
-
         });
+    }, { passive: true });
 
-    } catch (e) {
 
-        console.error(e);
+    /* ──────────────────────────────────────────────────────────────────────
+       3. SIGNATURE SCROLL-DRIVEN 3D FLIP & COLOR MORPH ENGINE
+          (Translates from Hero headline center -> flips 180° -> docks in "Hey!")
+       ────────────────────────────────────────────────────────────────────── */
+    const flipPortal = document.getElementById('flipPortal');   // wrapper — CSS positions this, JS must NOT touch transform
+    const flipCard = document.getElementById('scrollFlipCard');  // inner card — JS rotates this
+    const heroSection = document.getElementById('hero');
+    const heroPhotoStage = document.getElementById('heroPhotoStage');
+    const dockSlot = document.getElementById('dockSlot');
 
+    let targetProgress = 0;
+    let currentProgress = 0;
+    let isLoopRunning = false;
+
+    function applyTransform(p) {
+        if (!flipCard || window.innerWidth <= 1024) return;
+
+        // JS only rotates the inner card — CSS sticky handles position
+        const rotY = p * 180;
+        // Scale up: starts small (0.85) in hero, grows bigger (1.25) when landing in about
+        const baseScale = 0.85 + p * 0.40;
+        // Subtle mid-flip pop on top of the base growth
+        const popScale = 1 + Math.sin(p * Math.PI) * 0.04;
+        const finalScale = baseScale * popScale;
+        flipCard.style.transform = `rotateY(${rotY}deg) scale(${finalScale})`;
+
+        // Front face: stays crisp noir B&W throughout
+        const frontImg = flipCard.querySelector('.photo-bw');
+        if (frontImg) {
+            frontImg.style.filter = `grayscale(100%) contrast(1.15) brightness(0.92)`;
+        }
+
+        // Back face: blooms from B&W → rich full color as flip passes midpoint
+        const backImg = flipCard.querySelector('.photo-color');
+        if (backImg) {
+            const colorRatio = Math.min(Math.max((p - 0.35) / 0.65, 0), 1);
+            const sat = 1.0 + colorRatio * 0.3;
+            const gray = Math.max(0, (1 - colorRatio) * 100);
+            backImg.style.filter = `grayscale(${gray}%) contrast(1.05) saturate(${sat})`;
+        }
     }
 
-});
-
-
-//scroll bar
-window.addEventListener("scroll", () => {
-    const winScroll =
-        document.documentElement.scrollTop;
-
-    const height =
-        document.documentElement.scrollHeight -
-        document.documentElement.clientHeight;
-
-    const scrolled =
-        (winScroll / height) * 100;
-
-    document.getElementById(
-        "scroll-progress"
-    ).style.width = scrolled + "%";
-});
-
-// popup
-const profileImg = document.getElementById("profile-img");
-const popup = document.getElementById("profilePopup");
-const closeBtn = document.querySelector(".close-popup");
-
-profileImg.addEventListener("click", () => {
-    popup.classList.add("active");
-});
-
-closeBtn.addEventListener("click", () => {
-    popup.classList.remove("active");
-});
-
-popup.addEventListener("click", (e) => {
-    if (e.target === popup) {
-        popup.classList.remove("active");
+    function smoothStep() {
+        const diff = targetProgress - currentProgress;
+        if (Math.abs(diff) > 0.0008) {
+            currentProgress += diff * 0.12; // buttery smooth easing
+            applyTransform(currentProgress);
+            requestAnimationFrame(smoothStep);
+        } else {
+            currentProgress = targetProgress;
+            applyTransform(currentProgress);
+            isLoopRunning = false;
+        }
     }
-});
 
+    function updateScrollTarget() {
+        if (window.innerWidth <= 1024) {
+            // Disabled on mobile as requested (photo sits statically in hero section)
+            return;
+        }
 
+        const stickyWrap = document.getElementById('heroPhotoStage');
+        const dock = document.getElementById('dockSlot');
+        const aboutGrid = document.getElementById('about');
+        if (!stickyWrap || !dock) return;
 
-// --- Preloader ---
-function hidePreloader() {
-    const preloader = document.getElementById('preloader');
-    if (!preloader) return;
-    setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-        setTimeout(() => {
-            preloader.style.display = 'none';
-        }, 500); // fully remove from flow
+        const scrollY = window.scrollY;
+        const dockRect = dock.getBoundingClientRect();
+        const stageRect = stickyWrap.getBoundingClientRect();
+        const gridRect = aboutGrid ? aboutGrid.getBoundingClientRect() : dockRect;
 
-        // Trigger initial reveal animations after preloader
-        reveal();
-    }, 1500); // Reduced to 1 second for a snappier load
-}
+        // Visual height of the card when scaled (scale = 1.25 in About section)
+        const portalHeight = flipPortal ? flipPortal.offsetHeight : 250;
+        const photoVisualHeight = portalHeight * 1.25;
 
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    hidePreloader();
-} else {
-    document.addEventListener('DOMContentLoaded', hidePreloader);
-    window.addEventListener('load', hidePreloader); // fallback
-}
+        // Current un-shifted center and bottom of the sticky photo
+        const naturalPhotoCenter = stageRect.top + portalHeight / 2;
+        const unShiftedPhotoBottom = naturalPhotoCenter + photoVisualHeight / 2;
 
+        // The exact "red line" drawn by the user (bottom of about grid / buttons)
+        const redLine = gridRect.bottom;
 
-// --- Navigation Toggle (Mobile) ---
-const navMenu = document.getElementById('nav-menu'),
-    navToggle = document.getElementById('nav-toggle'),
-    navClose = document.getElementById('nav-close');
+        // Calculate how much the photo bottom overflows past the red line
+        const overflowPastRedLine = unShiftedPhotoBottom - redLine;
 
-if (navToggle) {
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.add('show-menu');
-    });
-}
+        // Distance from dockSlot center
+        const dockCenter = dockRect.top + dockRect.height / 2;
+        const diff = dockCenter - naturalPhotoCenter;
 
-if (navClose) {
-    navClose.addEventListener('click', () => {
-        navMenu.classList.remove('show-menu');
-    });
-}
-
-// Remove menu on link click
-const navLinks = document.querySelectorAll('.nav-link');
-const linkAction = () => {
-    const navMenu = document.getElementById('nav-menu');
-    navMenu.classList.remove('show-menu');
-}
-navLinks.forEach(n => n.addEventListener('click', linkAction));
-
-// --- Sticky Header ---
-const scrollHeader = () => {
-    const header = document.getElementById('header');
-    if (window.scrollY >= 50) header.classList.add('scrolled');
-    else header.classList.remove('scrolled');
-}
-window.addEventListener('scroll', scrollHeader);
-
-// --- Active Link on Scroll ---
-const sections = document.querySelectorAll('section[id]');
-const scrollActive = () => {
-    const scrollDown = window.scrollY;
-
-    sections.forEach(current => {
-        const sectionHeight = current.offsetHeight,
-            sectionTop = current.offsetTop - 100,
-            sectionId = current.getAttribute('id'),
-            sectionsClass = document.querySelector('.nav-menu a[href*=' + sectionId + ']');
-
-        if (sectionsClass) {
-            if (scrollDown > sectionTop && scrollDown <= sectionTop + sectionHeight) {
-                sectionsClass.classList.add('active');
+        // STRICT CLAMP: If the photo bottom crosses the red line, shift it UP
+        // by the exact overflow amount so its bottom never, ever goes below the red line!
+        if (flipPortal) {
+            if (overflowPastRedLine > 0) {
+                flipPortal.style.transform = `translate3d(0, ${(-overflowPastRedLine).toFixed(2)}px, 0)`;
+            } else if (diff < 0) {
+                flipPortal.style.transform = `translate3d(0, ${diff.toFixed(2)}px, 0)`;
             } else {
-                sectionsClass.classList.remove('active');
+                flipPortal.style.transform = '';
             }
         }
-    });
-}
-window.addEventListener('scroll', scrollActive);
 
-// --- Skills Tabs ---
-const tabs = document.querySelectorAll('.skills-tab'),
-    groups = document.querySelectorAll('.skills-group');
-
-tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-        const target = document.querySelector(tab.dataset.target);
-
-        // Remove active class from all groups and tabs
-        groups.forEach(group => group.classList.remove('active'));
-        tabs.forEach(t => t.classList.remove('active'));
-
-        // Add active class to clicked tab and corresponding group
-        tab.classList.add('active');
-        target.classList.add('active');
-    });
-});
-
-// --- Scroll Reveal Animations ---
-function reveal() {
-    const reveals = document.querySelectorAll('.reveal-up, .reveal-fade, .reveal-scale, .reveal-slide-left, .reveal-slide-right');
-    const windowHeight = window.innerHeight;
-    const elementVisible = 100;
-
-    reveals.forEach((element) => {
-        const elementTop = element.getBoundingClientRect().top;
-        if (elementTop < windowHeight - elementVisible) {
-            element.classList.add('active');
+        // Calculate flip progress from 0 (at hero) to 1 (when arriving at dockSlot)
+        const landingScrollY = scrollY + diff;
+        if (landingScrollY > 50) {
+            targetProgress = Math.min(Math.max(scrollY / landingScrollY, 0), 1);
+        } else {
+            targetProgress = diff <= 0 ? 1 : 0;
         }
-    });
-}
-window.addEventListener('scroll', reveal);
 
-// --- Contact Form Submission (Mock) ---
-const contactForm = document.getElementById("contactForm");
+        if (!isLoopRunning) {
+            isLoopRunning = true;
+            requestAnimationFrame(smoothStep);
+        }
+    }
 
-if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    window.addEventListener('scroll', updateScrollTarget, { passive: true });
+    window.addEventListener('resize', () => {
+        updateScrollTarget();
+        applyTransform(currentProgress);
+    }, { passive: true });
 
-        const btn = contactForm.querySelector("button");
-        const originalText = btn.innerHTML;
+    // Initial render call
+    updateScrollTarget();
+    applyTransform(targetProgress);
 
-        btn.disabled = true;
-        btn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
 
-        try {
-            const response = await fetch(contactForm.action, {
-                method: "POST",
-                body: new FormData(contactForm),
-                headers: {
-                    Accept: "application/json"
+    /* ──────────────────────────────────────────────────────────────────────
+       4. AMBIENT GLYPH PARALLAX MOUSE EFFECT (DESKTOP)
+       ────────────────────────────────────────────────────────────────────── */
+    const starGlyph = document.querySelector('.glyph-star');
+    const boltGlyph = document.querySelector('.glyph-bolt');
+
+    if (window.innerWidth > 1024 && heroSection) {
+        heroSection.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const deltaX = (clientX - centerX) / centerX;
+            const deltaY = (clientY - centerY) / centerY;
+
+            if (starGlyph) {
+                starGlyph.style.transform = `translate(${deltaX * -22}px, ${deltaY * -22}px) rotate(${deltaX * 10}deg)`;
+            }
+            if (boltGlyph) {
+                boltGlyph.style.transform = `translate(${deltaX * 26}px, ${deltaY * 26}px) rotate(${deltaY * -8}deg)`;
+            }
+        });
+
+        heroSection.addEventListener('mouseleave', () => {
+            if (starGlyph) starGlyph.style.transform = '';
+            if (boltGlyph) boltGlyph.style.transform = '';
+        });
+    }
+
+
+    /* ──────────────────────────────────────────────────────────────────────
+       5. COUNTER ANIMATION FOR METRICS
+       ────────────────────────────────────────────────────────────────────── */
+    function initCounters() {
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const isFloat = !Number.isInteger(target);
+            let current = 0;
+            const duration = 1600; // ms
+            const startTime = performance.now();
+
+            function updateCounter(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out expo
+                const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                current = target * easeProgress;
+
+                counter.textContent = isFloat ? current.toFixed(1) : Math.floor(current);
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = isFloat ? target.toFixed(1) : target;
+                }
+            }
+            requestAnimationFrame(updateCounter);
+        });
+    }
+
+    const journeySection = document.getElementById('journey');
+    if (journeySection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initCounters();
+                    observer.disconnect();
                 }
             });
+        }, { threshold: 0.3 });
+        observer.observe(journeySection);
+    }
 
-            if (response.ok) {
-                contactForm.reset();
-                btn.innerHTML = 'Message Sent <i class="fas fa-check"></i>';
-                btn.style.background = "linear-gradient(135deg, #00ff88, #00cc66)";
-            } else {
-                btn.innerHTML = 'Failed to Send <i class="fas fa-times"></i>';
-                btn.style.background = "#ff2b2b";
-            }
-        } catch (error) {
-            btn.innerHTML = 'Network Error <i class="fas fa-wifi"></i>';
-            btn.style.background = "#ff2b2b";
+
+    /* ──────────────────────────────────────────────────────────────────────
+       6. 3D INTERACTIVE SKILLS SPHERE (TAGCANVAS)
+       ────────────────────────────────────────────────────────────────────── */
+    function startTagCanvas() {
+        if (!window.TagCanvas) return;
+        const canvas = document.getElementById('skillCanvas');
+        const wrapper = document.querySelector('.sphere-wrapper');
+
+        // Dynamically compute canvas dimensions to ensure it never exceeds container
+        if (canvas && wrapper) {
+            const containerWidth = wrapper.clientWidth || (wrapper.parentElement ? wrapper.parentElement.clientWidth : 340);
+            const targetDim = Math.min(Math.max(containerWidth - 24, 260), 460);
+            canvas.width = targetDim;
+            canvas.height = targetDim;
         }
 
-        setTimeout(() => {
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-            btn.style.background = "";
-        }, 3000);
-    });
-}
+        try {
+            TagCanvas.Start('skillCanvas', 'tags', {
+                textColour: '#0d0d0d',
+                textHeight: window.innerWidth <= 768 ? 14 : 20,
+                outlineColour: 'transparent',
+                depth: 0.92,
+                maxSpeed: 0.025,
+                minSpeed: 0.008,
+                decel: 0.98,
+                reverse: true,
+                wheelZoom: false,
+                shadow: 'rgba(0, 0, 0, 0.08)',
+                shadowBlur: 4,
+                initial: [0.08, -0.04],
+                fadeIn: 800,
+                noSelect: true
+            });
+        } catch (e) {
+            console.warn('TagCanvas notice:', e);
+        }
+    }
+    // Run after full page load; fallback to DOMContentLoaded timing if load already fired
+    if (document.readyState === 'complete') {
+        startTagCanvas();
+    } else {
+        window.addEventListener('load', startTagCanvas);
+    }
 
-// --- Footer Year ---
-const yearSpan = document.getElementById('year');
-if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-}
+
+    /* ──────────────────────────────────────────────────────────────────────
+       7. CONTACT FORM (FORMSPREE WITH DYNAMIC FEEDBACK)
+       ────────────────────────────────────────────────────────────────────── */
+    const contactForm = document.getElementById('editorialContactForm');
+    const submitBtn = document.getElementById('submitButton');
+
+    if (contactForm && submitBtn) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const originalText = submitBtn.innerHTML;
+
+            // Loading state
+            submitBtn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.style.opacity = '0.7';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(contactForm);
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    submitBtn.innerHTML = '<span>Message Sent!</span> <i class="fas fa-check"></i>';
+                    submitBtn.style.background = '#1a1a1a';
+                    submitBtn.style.opacity = '1';
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.style.background = '';
+                        submitBtn.disabled = false;
+                    }, 4000);
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (err) {
+                // Fallback submission if fetch is blocked by CORS/file protocol
+                contactForm.submit();
+            }
+        });
+    }
 
 
-window.addEventListener("load", () => {
-    document.documentElement.classList.add("loaded");
-});
+    /* ──────────────────────────────────────────────────────────────────────
+       8. DYNAMIC YEAR
+       ────────────────────────────────────────────────────────────────────── */
+    const yearEl = document.getElementById('currentYear');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+}); // End DOMContentLoaded

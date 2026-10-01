@@ -17,3 +17,6 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Personal dev notes (keep local only)
+PORTFOLIO_CONTEXT.md

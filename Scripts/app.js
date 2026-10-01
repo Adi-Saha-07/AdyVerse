@@ -3,7 +3,137 @@
    Editorial Monochrome + iOS 27 Liquid Glass + Scroll-Driven 3D Flip Engine
    ========================================================================== */
 
+/* ──────────────────────────────────────────────────────────────────────────
+   0. PREMIUM SMOOTH SCROLL ENGINE
+   Momentum-based lerp (linear interpolation) scroll with exponential easing.
+   Far smoother than the browser's native scroll-behavior:smooth.
+   ────────────────────────────────────────────────────────────────────────── */
+(function () {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return; // Respect accessibility
+
+    // Smooth scroll config
+    const LERP_FACTOR = 0.082;      // Lower = more momentum, higher = snappier (0.06–0.12 sweet spot)
+    const VELOCITY_THRESHOLD = 0.4; // px — stop rAF loop below this velocity
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let rafId = null;
+    let isAnimating = false;
+
+    // Clamp helper
+    const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+
+    // Core lerp loop
+    function smoothLoop() {
+        const diff = targetY - currentY;
+
+        if (Math.abs(diff) < VELOCITY_THRESHOLD) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            isAnimating = false;
+            rafId = null;
+            return;
+        }
+
+        currentY += diff * LERP_FACTOR;
+        window.scrollTo(0, currentY);
+        rafId = requestAnimationFrame(smoothLoop);
+    }
+
+    // Intercept wheel events for smooth momentum
+    window.addEventListener('wheel', (e) => {
+        e.preventDefault();
+
+        // Increase scroll distance for a more natural feel
+        const delta = e.deltaY * (e.deltaMode === 1 ? 30 : e.deltaMode === 2 ? window.innerHeight : 1);
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+
+        targetY = clamp(targetY + delta, 0, maxY);
+
+        if (!isAnimating) {
+            isAnimating = true;
+            currentY = window.scrollY;
+            rafId = requestAnimationFrame(smoothLoop);
+        }
+    }, { passive: false });
+
+    // Smooth anchor-link scrolling (nav clicks, "back to top", etc.)
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('a[href^="#"]');
+        if (!anchor) return;
+
+        const hash = anchor.getAttribute('href');
+        if (!hash || hash === '#') return;
+
+        const target = document.querySelector(hash);
+        if (!target) return;
+
+        e.preventDefault();
+
+        const headerOffset = 80; // Match sticky header height
+        const elementTop = target.getBoundingClientRect().top + window.scrollY;
+        const scrollTo = Math.max(0, elementTop - headerOffset);
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+
+        targetY = clamp(scrollTo, 0, maxY);
+
+        if (!isAnimating) {
+            isAnimating = true;
+            currentY = window.scrollY;
+            rafId = requestAnimationFrame(smoothLoop);
+        }
+
+        // Update URL hash without jumping
+        history.pushState(null, '', hash);
+    });
+
+    // Touch scroll: sync targetY to actual position (native touch is already smooth)
+    window.addEventListener('touchstart', () => {
+        if (isAnimating) {
+            cancelAnimationFrame(rafId);
+            isAnimating = false;
+        }
+        targetY = window.scrollY;
+        currentY = window.scrollY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+        targetY = window.scrollY;
+        currentY = window.scrollY;
+    }, { passive: true });
+
+    // Keyboard arrow/page scroll
+    window.addEventListener('keydown', (e) => {
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        let delta = 0;
+
+        switch (e.key) {
+            case 'ArrowDown': delta = 80; break;
+            case 'ArrowUp': delta = -80; break;
+            case 'PageDown': delta = window.innerHeight * 0.85; break;
+            case 'PageUp': delta = -window.innerHeight * 0.85; break;
+            case 'End': delta = maxY - targetY; break;
+            case 'Home': delta = -targetY; break;
+            default: return;
+        }
+
+        // Don't hijack if user is typing in an input
+        if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+
+        e.preventDefault();
+        targetY = clamp(targetY + delta, 0, maxY);
+
+        if (!isAnimating) {
+            isAnimating = true;
+            currentY = window.scrollY;
+            rafId = requestAnimationFrame(smoothLoop);
+        }
+    });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+
 
     /* ──────────────────────────────────────────────────────────────────────
        1. SCROLL PROGRESS BAR
@@ -64,6 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Active nav link spy on scroll
     const sections = document.querySelectorAll('section[id]');
+    const mbnItems = document.querySelectorAll('.mbn-item');
+
     window.addEventListener('scroll', () => {
         const scrollY = window.scrollY;
         sections.forEach(sec => {
@@ -73,6 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (scrollY >= top && scrollY < top + height) {
                 navItems.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                });
+                mbnItems.forEach(link => {
                     link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
                 });
             }

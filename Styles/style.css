@@ -231,7 +231,7 @@ img {
     border-radius: inherit;
     background:
         radial-gradient(ellipse 45% 75% at 94% 8%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
-        radial-gradient(ellipse 45% 75% at  6% 92%, rgba(255, 255, 255, 0.38) 0%, transparent 55%);
+        radial-gradient(ellipse 45% 75% at 6% 92%, rgba(255, 255, 255, 0.38) 0%, transparent 55%);
     mix-blend-mode: screen;
     pointer-events: none;
     z-index: 0;
@@ -248,12 +248,10 @@ img {
     border-radius: 999px;
     pointer-events: none;
     z-index: 0;
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(255, 255, 255, 0.10) 60%,
-        rgba(255, 255, 255, 0.00) 100%
-    );
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.45) 0%,
+            rgba(255, 255, 255, 0.10) 60%,
+            rgba(255, 255, 255, 0.00) 100%);
 }
 
 .island-capsule>* {
@@ -290,6 +288,7 @@ img {
 }
 
 @keyframes pulseDot {
+
     0%,
     100% {
         transform: scale(1);
@@ -451,7 +450,7 @@ img {
     pointer-events: none;
     background:
         radial-gradient(ellipse 50% 60% at 92% 10%, rgba(255, 255, 255, 0.50) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at  8% 90%, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
+        radial-gradient(ellipse 50% 60% at 8% 90%, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
     mix-blend-mode: screen;
 }
 
@@ -1530,7 +1529,7 @@ img {
     pointer-events: none;
     background:
         radial-gradient(ellipse 45% 65% at 94% 10%, rgba(255, 255, 255, 0.45) 0%, transparent 55%),
-        radial-gradient(ellipse 45% 65% at  6% 90%, rgba(255, 255, 255, 0.28) 0%, transparent 55%);
+        radial-gradient(ellipse 45% 65% at 6% 90%, rgba(255, 255, 255, 0.28) 0%, transparent 55%);
     mix-blend-mode: screen;
 }
 
@@ -1617,7 +1616,7 @@ img {
     pointer-events: none;
     background:
         radial-gradient(ellipse 50% 60% at 94% 8%, rgba(255, 255, 255, 0.50) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 60% at  8% 92%, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
+        radial-gradient(ellipse 50% 60% at 8% 92%, rgba(255, 255, 255, 0.35) 0%, transparent 60%);
     mix-blend-mode: screen;
 }
 
@@ -2032,12 +2031,12 @@ img {
     pointer-events: none;
     background:
         radial-gradient(ellipse 50% 65% at 96% 8%, rgba(255, 255, 255, 0.50) 0%, transparent 58%),
-        radial-gradient(ellipse 50% 65% at  4% 92%, rgba(255, 255, 255, 0.32) 0%, transparent 58%);
+        radial-gradient(ellipse 50% 65% at 4% 92%, rgba(255, 255, 255, 0.32) 0%, transparent 58%);
     mix-blend-mode: screen;
     z-index: 0;
 }
 
-.leadership-editorial-card > * {
+.leadership-editorial-card>* {
     position: relative;
     z-index: 1;
 }
@@ -2268,7 +2267,7 @@ img {
     z-index: 0;
 }
 
-.contact-glass-card > * {
+.contact-glass-card>* {
     position: relative;
     z-index: 1;
 }
@@ -2901,7 +2900,7 @@ img {
         display: none !important;
     }
 
-    /* iOS 27 LIQUID GLASS — pure transparent, matches any background */
+    /* iOS 27 LIQUID GLASS — exactly matching header capsule */
     .mobile-bottom-nav {
         display: flex;
         align-items: center;
@@ -2919,48 +2918,64 @@ img {
         user-select: none;
         -webkit-user-select: none;
         cursor: grab;
-        overflow: visible;
+        overflow: hidden;
+        /* Same as header — clips caustics cleanly inside pill */
 
-        /* PURE GLASS: near-zero fill, let the blurred background show through */
-        background: rgba(255, 255, 255, 0.05);
-
-        /* Strong blur — background bleeds through as the "color" of the pill */
-        backdrop-filter: blur(40px) saturate(180%);
-        -webkit-backdrop-filter: blur(40px) saturate(180%);
-
-        /* Hairline rim only — pill shape definition */
-        border: 0.5px solid rgba(255, 255, 255, 0.30);
-
-        /* Only outer drop shadow — NO white inset paints inside the pill */
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+        /* Exact same glass tokens as .island-capsule header */
+        background: var(--lg-header-bg);
+        backdrop-filter: var(--lg-header-blur);
+        -webkit-backdrop-filter: var(--lg-header-blur);
+        border: 0.5px solid var(--lg-header-border);
+        box-shadow: var(--lg-header-shadow);
 
         animation: mbnSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
     }
 
-    /* Very subtle top specular line — single thin white rim, not a fill */
+    /* Corner caustic highlights — same values as .island-capsule::before */
     .mobile-bottom-nav::before {
         content: '';
         position: absolute;
-        top: 0;
-        left: 8%;
-        right: 8%;
-        height: 1px;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        z-index: 0;
+        background:
+            radial-gradient(ellipse 45% 75% at 94% 8%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
+            radial-gradient(ellipse 45% 75% at 6% 92%, rgba(255, 255, 255, 0.38) 0%, transparent 55%);
+        mix-blend-mode: screen;
+    }
+
+    /* Narrow top gloss ribbon — same as .island-capsule::after */
+    .mobile-bottom-nav::after {
+        content: '';
+        position: absolute;
+        top: 1.5px;
+        left: 20%;
+        right: 20%;
+        height: 35%;
         border-radius: 999px;
         pointer-events: none;
         z-index: 0;
-        background: rgba(255, 255, 255, 0.55);
+        background: linear-gradient(180deg,
+                rgba(255, 255, 255, 0.45) 0%,
+                rgba(255, 255, 255, 0.10) 60%,
+                rgba(255, 255, 255, 0.00) 100%);
     }
-
-    /* No ::after — removed the white gloss ribbon that was making it look milky */
-
 
     .mobile-bottom-nav.is-dragging {
         cursor: grabbing;
     }
 
     @keyframes mbnSlideUp {
-        from { opacity: 0; transform: translateX(-50%) translateY(24px); }
-        to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(24px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
     }
 
     /* â”€â”€ Active Sliding Pill Indicator â”€â”€ */
@@ -2974,28 +2989,28 @@ img {
         z-index: 2;
         pointer-events: none;
         /* The active pill is also a mini liquid-glass pill */
-        background: linear-gradient(
-            160deg,
-            rgba(255,255,255,0.98) 0%,
-            rgba(255,255,255,0.88) 100%
-        );
-        border: 0.5px solid rgba(255,255,255,1.0);
+        background: linear-gradient(160deg,
+                rgba(255, 255, 255, 0.98) 0%,
+                rgba(255, 255, 255, 0.88) 100%);
+        border: 0.5px solid rgba(255, 255, 255, 1.0);
         box-shadow:
-            0 4px 14px rgba(0,0,0,0.14),
-            0 1px 4px  rgba(0,0,0,0.07),
-            inset 0 1.5px 0 rgba(255,255,255,1),
-            inset 0 -1px 0  rgba(255,255,255,0.70),
-            inset 0 0 10px  rgba(255,255,255,0.45);
+            0 4px 14px rgba(0, 0, 0, 0.14),
+            0 1px 4px rgba(0, 0, 0, 0.07),
+            inset 0 1.5px 0 rgba(255, 255, 255, 1),
+            inset 0 -1px 0 rgba(255, 255, 255, 0.70),
+            inset 0 0 10px rgba(255, 255, 255, 0.45);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         transition: transform 0.40s cubic-bezier(0.22, 1.25, 0.36, 1),
-                    width   0.34s cubic-bezier(0.22, 1.25, 0.36, 1),
-                    opacity 0.25s ease;
+            width 0.34s cubic-bezier(0.22, 1.25, 0.36, 1),
+            opacity 0.25s ease;
         will-change: transform, width;
         opacity: 0;
     }
 
-    .mbn-indicator.ready { opacity: 1; }
+    .mbn-indicator.ready {
+        opacity: 1;
+    }
 
     .mobile-bottom-nav.is-dragging .mbn-indicator {
         transition: none !important;
@@ -3013,9 +3028,9 @@ img {
         flex: 1;
         padding: 2px 0;
         border-radius: 999px;
-        color: rgba(0,0,0,0.46);
+        color: rgba(0, 0, 0, 0.46);
         text-decoration: none;
-        transition: color 0.22s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+        transition: color 0.22s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
         -webkit-tap-highlight-color: transparent;
         cursor: pointer;
     }
@@ -3026,7 +3041,7 @@ img {
         justify-content: center;
         height: 18px;
         font-size: 0.90rem;
-        transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), color 0.22s ease;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.22s ease;
     }
 
     .mbn-label {
@@ -3040,17 +3055,36 @@ img {
     }
 
     /* Active tab */
-    .mbn-item.active              { color: #080810; }
-    .mbn-item.active .mbn-icon   { transform: scale(1.1) translateY(-0.5px); color: #000; }
-    .mbn-item.active .mbn-label  { font-weight: 700; color: #000; }
+    .mbn-item.active {
+        color: #080810;
+    }
+
+    .mbn-item.active .mbn-icon {
+        transform: scale(1.1) translateY(-0.5px);
+        color: #000;
+    }
+
+    .mbn-item.active .mbn-label {
+        font-weight: 700;
+        color: #000;
+    }
 
     /* Hover */
-    .mbn-item:not(.active):hover            { color: rgba(0,0,0,0.70); }
-    .mbn-item:not(.active):hover .mbn-icon  { transform: scale(1.06); }
+    .mbn-item:not(.active):hover {
+        color: rgba(0, 0, 0, 0.70);
+    }
+
+    .mbn-item:not(.active):hover .mbn-icon {
+        transform: scale(1.06);
+    }
 
     /* Press */
-    .mbn-item:active { transform: scale(0.93); }
+    .mbn-item:active {
+        transform: scale(0.93);
+    }
 
     /* Body padding so content isn't hidden behind bar */
-    body { padding-bottom: 76px; }
+    body {
+        padding-bottom: 76px;
+    }
 }

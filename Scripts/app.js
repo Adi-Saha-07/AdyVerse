@@ -192,14 +192,98 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Active nav link spy on scroll
+    // Active nav link spy on scroll & iOS 27 Mobile Bottom Nav Engine
     const sections = document.querySelectorAll('section[id]');
-    const mbnItems = document.querySelectorAll('.mbn-item');
+    const mbnNav = document.getElementById('mobileBottomNav');
+    const mbnIndicator = document.getElementById('mbnIndicator');
+    const mbnItems = Array.from(document.querySelectorAll('.mbn-item'));
 
+    let isDraggingMbn = false;
+    let dragStartX = 0;
+    let hasDraggedMbn = false;
+    let activeDragItem = null;
+    let justFinishedDrag = false;
+    let pointerCaptured = false;
+    let isProgrammaticScroll = false;
+    let scrollTimeout = null;
+
+    function smoothScrollToSection(hash) {
+        if (!hash || !hash.startsWith('#')) return;
+
+        if (hash === '#hero' || hash === '#top') {
+            isProgrammaticScroll = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            try { history.pushState(null, '', hash); } catch (e) {}
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => { isProgrammaticScroll = false; }, 850);
+            return;
+        }
+
+        const sec = document.querySelector(hash);
+        if (!sec) return;
+
+        const headerOffset = 70;
+        const elementTop = sec.getBoundingClientRect().top + window.scrollY;
+        const targetTop = Math.max(0, elementTop - headerOffset);
+
+        isProgrammaticScroll = true;
+        window.scrollTo({
+            top: targetTop,
+            behavior: 'smooth'
+        });
+        try { history.pushState(null, '', hash); } catch (e) {}
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => { isProgrammaticScroll = false; }, 850);
+    }
+
+    function positionMbnIndicator(item, animate = true) {
+        if (!mbnNav || !mbnIndicator || !item) return;
+        const left = item.offsetLeft;
+        const width = item.offsetWidth;
+        if (width === 0) return;
+
+        if (animate) {
+            mbnIndicator.style.transition = 'transform 0.40s cubic-bezier(0.22, 1.25, 0.36, 1), width 0.34s cubic-bezier(0.22, 1.25, 0.36, 1)';
+        } else {
+            mbnIndicator.style.transition = 'none';
+        }
+
+        mbnIndicator.style.transform = `translateX(${left}px)`;
+        mbnIndicator.style.width = `${width}px`;
+        mbnIndicator.classList.add('ready');
+    }
+
+    function initMbnIndicator() {
+        if (!mbnNav || !mbnIndicator || mbnItems.length === 0) return;
+        const activeItem = mbnItems.find(item => item.classList.contains('active')) || mbnItems[0];
+        if (activeItem) {
+            positionMbnIndicator(activeItem, false);
+        }
+    }
+
+    function getItemAtX(clientX) {
+        let closest = null;
+        let minDist = Infinity;
+        mbnItems.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            const center = rect.left + rect.width / 2;
+            const dist = Math.abs(clientX - center);
+            if (dist < minDist) {
+                minDist = dist;
+                closest = item;
+            }
+        });
+        return closest;
+    }
+
+    // Scroll spy for both desktop and mobile
     window.addEventListener('scroll', () => {
+        if (isDraggingMbn || isProgrammaticScroll) return;
         const scrollY = window.scrollY;
+
         sections.forEach(sec => {
-            const top = sec.offsetTop - 180;
+            const rect = sec.getBoundingClientRect();
+            const top = rect.top + scrollY - 180;
             const height = sec.offsetHeight;
             const id = sec.getAttribute('id');
 
@@ -207,12 +291,126 @@ document.addEventListener('DOMContentLoaded', () => {
                 navItems.forEach(link => {
                     link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
                 });
-                mbnItems.forEach(link => {
-                    link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                });
+
+                const matchingMbn = mbnItems.find(link => link.getAttribute('href') === `#${id}`);
+                if (matchingMbn) {
+                    mbnItems.forEach(link => {
+                        link.classList.toggle('active', link === matchingMbn);
+                    });
+                    positionMbnIndicator(matchingMbn, true);
+                }
             }
         });
     }, { passive: true });
+
+    // iOS 27 Fluid Sliding & Drag Pill Navigation Controller
+    if (mbnNav && mbnIndicator && mbnItems.length > 0) {
+        // Pointer drag interaction (slide/drag/khich ke change)
+        mbnNav.addEventListener('pointerdown', (e) => {
+            isDraggingMbn = true;
+            dragStartX = e.clientX;
+            hasDraggedMbn = false;
+            pointerCaptured = false;
+            activeDragItem = getItemAtX(e.clientX) || mbnItems.find(i => i.classList.contains('active'));
+        });
+
+        mbnNav.addEventListener('pointermove', (e) => {
+            if (!isDraggingMbn) return;
+            const deltaX = e.clientX - dragStartX;
+
+            if (Math.abs(deltaX) > 6) {
+                hasDraggedMbn = true;
+                if (!pointerCaptured) {
+                    try {
+                        mbnNav.setPointerCapture(e.pointerId);
+                        pointerCaptured = true;
+                    } catch (err) { }
+                    mbnNav.classList.add('is-dragging');
+                    mbnIndicator.style.transition = 'none';
+                }
+            }
+
+            if (!hasDraggedMbn) return;
+
+            const navRect = mbnNav.getBoundingClientRect();
+            const itemUnder = getItemAtX(e.clientX);
+
+            if (itemUnder && itemUnder !== activeDragItem) {
+                activeDragItem = itemUnder;
+                mbnItems.forEach(i => i.classList.toggle('active', i === itemUnder));
+                if (navigator.vibrate) {
+                    try { navigator.vibrate(6); } catch (err) { }
+                }
+            }
+
+            // Real-time tactile liquid pill tracking & stretch
+            const itemWidth = activeDragItem ? activeDragItem.offsetWidth : (navRect.width / mbnItems.length);
+            const clampedX = Math.max(navRect.left + 4, Math.min(navRect.right - 4, e.clientX));
+            const pillLeft = Math.max(4, Math.min(navRect.width - itemWidth - 4, (clampedX - navRect.left) - (itemWidth / 2)));
+
+            // Liquid rubber-band stretch during dragging
+            const stretch = Math.min(1.15, 1 + Math.abs(deltaX) * 0.0008);
+            mbnIndicator.style.transform = `translateX(${pillLeft}px) scaleX(${stretch})`;
+            mbnIndicator.style.width = `${itemWidth}px`;
+        });
+
+        const handlePointerEnd = (e) => {
+            if (!isDraggingMbn) return;
+            isDraggingMbn = false;
+            mbnNav.classList.remove('is-dragging');
+
+            if (pointerCaptured) {
+                try {
+                    mbnNav.releasePointerCapture(e.pointerId);
+                } catch (err) { }
+                pointerCaptured = false;
+            }
+
+            const targetItem = activeDragItem || getItemAtX(e.clientX) || mbnItems[0];
+
+            if (hasDraggedMbn) {
+                justFinishedDrag = true;
+                setTimeout(() => { justFinishedDrag = false; }, 300);
+
+                mbnItems.forEach(i => i.classList.toggle('active', i === targetItem));
+                positionMbnIndicator(targetItem, true);
+
+                const targetHash = targetItem.getAttribute('href');
+                smoothScrollToSection(targetHash);
+            }
+        };
+
+        mbnNav.addEventListener('pointerup', handlePointerEnd);
+        mbnNav.addEventListener('pointercancel', handlePointerEnd);
+
+        // Click / tap on individual items
+        mbnItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                if (justFinishedDrag) return;
+
+                mbnItems.forEach(i => i.classList.toggle('active', i === item));
+                positionMbnIndicator(item, true);
+
+                const targetHash = item.getAttribute('href');
+                smoothScrollToSection(targetHash);
+            });
+        });
+
+        // Window resize & orientation change handler
+        window.addEventListener('resize', () => {
+            const current = mbnItems.find(i => i.classList.contains('active')) || mbnItems[0];
+            positionMbnIndicator(current, false);
+        }, { passive: true });
+
+        // Initialize indicator position
+        initMbnIndicator();
+        setTimeout(initMbnIndicator, 60);
+        setTimeout(initMbnIndicator, 300);
+        window.addEventListener('load', initMbnIndicator);
+    }
 
 
     /* ──────────────────────────────────────────────────────────────────────

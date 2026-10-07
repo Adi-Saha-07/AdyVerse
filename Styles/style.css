@@ -2922,23 +2922,18 @@ img {
         isolation: isolate;
         overflow: visible;
 
-        /* NEARLY CLEAR glass — like real glass, not white milk */
-        background: rgba(255, 255, 255, 0.06);
+        /* Exact same transparent glass as the header capsule */
+        background: var(--lg-header-bg);
 
-        /* Strong blur so background shows through smeared */
-        backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
-        -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
+        /* Identical blur/saturate/brightness as header */
+        backdrop-filter: var(--lg-header-blur);
+        -webkit-backdrop-filter: var(--lg-header-blur);
 
-        /* HAIRLINE border — not a thick white ring */
-        border: 0.5px solid rgba(255, 255, 255, 0.30);
+        /* Same hairline optical border as header */
+        border: 0.5px solid var(--lg-header-border);
 
-        /* Optical rim lines only — no white body fill */
-        box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.14),
-            0 2px 8px  rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.90),
-            inset 0 3px 4px -2px rgba(255, 255, 255, 0.35),
-            inset 0 -0.5px 0 rgba(255, 255, 255, 0.60);
+        /* Same specular multi-layer shadow as header */
+        box-shadow: var(--lg-header-shadow);
 
         animation: mbnSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
     }

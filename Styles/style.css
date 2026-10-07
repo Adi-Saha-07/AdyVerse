@@ -2901,7 +2901,7 @@ img {
         display: none !important;
     }
 
-    /* iOS 27 LIQUID GLASS — truly transparent on any background */
+    /* iOS 27 LIQUID GLASS — pure transparent, matches any background */
     .mobile-bottom-nav {
         display: flex;
         align-items: center;
@@ -2919,66 +2919,40 @@ img {
         user-select: none;
         -webkit-user-select: none;
         cursor: grab;
-        /* overflow: visible so mix-blend-mode: screen on ::before
-           can blend caustics with the actual page behind the bar.
-           On dark backgrounds: screen + dark = no effect (transparent).
-           On light backgrounds: screen + light = subtle highlights. */
         overflow: visible;
 
-        /* Almost invisible fill — let backdrop-filter do the work */
-        background: rgba(255, 255, 255, 0.07);
+        /* PURE GLASS: near-zero fill, let the blurred background show through */
+        background: rgba(255, 255, 255, 0.05);
 
-        /* Same blur/saturate/brightness as header — low brightness */
-        backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
-        -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
+        /* Strong blur — background bleeds through as the "color" of the pill */
+        backdrop-filter: blur(40px) saturate(180%);
+        -webkit-backdrop-filter: blur(40px) saturate(180%);
 
-        /* Hairline optical border */
-        border: 0.5px solid rgba(255, 255, 255, 0.35);
+        /* Hairline rim only — pill shape definition */
+        border: 0.5px solid rgba(255, 255, 255, 0.30);
 
-        /* Specular inset rim — just a thin top-gloss line, same as header */
-        box-shadow:
-            0 10px 32px rgba(0, 0, 0, 0.07),
-            0 2px 8px rgba(0, 0, 0, 0.03),
-            inset 0 1px 0 rgba(255, 255, 255, 0.92),
-            inset 0 3px 4px -2px rgba(255, 255, 255, 0.35),
-            inset 0 -0.5px 0 rgba(255, 255, 255, 0.60);
+        /* Only outer drop shadow — NO white inset paints inside the pill */
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
 
         animation: mbnSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
     }
 
-    /* Corner caustics — mix-blend-mode:screen auto-hides on dark backgrounds */
+    /* Very subtle top specular line — single thin white rim, not a fill */
     .mobile-bottom-nav::before {
         content: '';
         position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        z-index: 0;
-        background:
-            radial-gradient(ellipse 45% 75% at 94% 8%, rgba(255,255,255,0.55) 0%, transparent 55%),
-            radial-gradient(ellipse 45% 75% at  6% 92%, rgba(255,255,255,0.38) 0%, transparent 55%);
-        mix-blend-mode: screen;
-    }
-
-    /* Narrow top gloss ribbon */
-    .mobile-bottom-nav::after {
-        content: '';
-        position: absolute;
-        top: 1.5px;
-        left: 20%;
-        right: 20%;
-        height: 35%;
+        top: 0;
+        left: 8%;
+        right: 8%;
+        height: 1px;
         border-radius: 999px;
         pointer-events: none;
         z-index: 0;
-        background: linear-gradient(
-            180deg,
-            rgba(255,255,255,0.45) 0%,
-            rgba(255,255,255,0.10) 60%,
-            rgba(255,255,255,0.00) 100%
-        );
-        mix-blend-mode: screen;
+        background: rgba(255, 255, 255, 0.55);
     }
+
+    /* No ::after — removed the white gloss ribbon that was making it look milky */
+
 
     .mobile-bottom-nav.is-dragging {
         cursor: grabbing;

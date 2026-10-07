@@ -162,11 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         if (!headerCapsule) return;
         if (window.scrollY > 40) {
-            headerCapsule.style.transform = 'scale(0.98)';
-            headerCapsule.style.background = 'rgba(255, 255, 255, 0.85)';
+            headerCapsule.classList.add('is-scrolled');
         } else {
-            headerCapsule.style.transform = 'scale(1)';
-            headerCapsule.style.background = 'rgba(255, 255, 255, 0.72)';
+            headerCapsule.classList.remove('is-scrolled');
         }
     }, { passive: true });
 

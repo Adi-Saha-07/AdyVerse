@@ -2901,7 +2901,7 @@ img {
         display: none !important;
     }
 
-    /* iOS 27 LIQUID GLASS — truly transparent, just like the header */
+    /* iOS 27 LIQUID GLASS — exactly matching header capsule */
     .mobile-bottom-nav {
         display: flex;
         align-items: center;
@@ -2919,32 +2919,19 @@ img {
         user-select: none;
         -webkit-user-select: none;
         cursor: grab;
-        /* NO isolation: isolate — lets ::before mix-blend-mode: screen
-           blend caustics against actual page content behind the bar */
-        overflow: visible;
+        overflow: hidden; /* Same as header — clips caustics cleanly inside pill */
 
-        /* Near-transparent glass body — same as header */
-        background: rgba(255, 255, 255, 0.08);
-
-        /* More brightness so it visibly lightens dark backgrounds */
-        backdrop-filter: blur(32px) saturate(180%) brightness(1.18);
-        -webkit-backdrop-filter: blur(32px) saturate(180%) brightness(1.18);
-
-        /* Hairline optical rim — same as header */
-        border: 0.5px solid rgba(255, 255, 255, 0.35);
-
-        /* Strong specular inset rims — same as header */
-        box-shadow:
-            0 10px 32px rgba(0, 0, 0, 0.07),
-            0 2px 8px rgba(0, 0, 0, 0.03),
-            inset 0 1px 0 rgba(255, 255, 255, 0.92),
-            inset 0 3px 4px -2px rgba(255, 255, 255, 0.35),
-            inset 0 -0.5px 0 rgba(255, 255, 255, 0.60);
+        /* Exact same glass tokens as .island-capsule header */
+        background: var(--lg-header-bg);
+        backdrop-filter: var(--lg-header-blur);
+        -webkit-backdrop-filter: var(--lg-header-blur);
+        border: 0.5px solid var(--lg-header-border);
+        box-shadow: var(--lg-header-shadow);
 
         animation: mbnSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
     }
 
-    /* Corner caustics only — NO side fills */
+    /* Corner caustic highlights — same values as .island-capsule::before */
     .mobile-bottom-nav::before {
         content: '';
         position: absolute;
@@ -2953,19 +2940,19 @@ img {
         pointer-events: none;
         z-index: 0;
         background:
-            radial-gradient(ellipse 40% 80% at 94% 8%, rgba(255,255,255,0.55) 0%, transparent 55%),
-            radial-gradient(ellipse 40% 80% at  6% 92%, rgba(255,255,255,0.38) 0%, transparent 55%);
+            radial-gradient(ellipse 45% 75% at 94% 8%, rgba(255,255,255,0.55) 0%, transparent 55%),
+            radial-gradient(ellipse 45% 75% at  6% 92%, rgba(255,255,255,0.38) 0%, transparent 55%);
         mix-blend-mode: screen;
     }
 
-    /* Narrow top gloss ribbon */
+    /* Narrow top gloss ribbon — same as .island-capsule::after */
     .mobile-bottom-nav::after {
         content: '';
         position: absolute;
         top: 1.5px;
         left: 20%;
         right: 20%;
-        height: 30%;
+        height: 35%;
         border-radius: 999px;
         pointer-events: none;
         z-index: 0;

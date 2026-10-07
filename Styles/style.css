@@ -2901,7 +2901,7 @@ img {
         display: none !important;
     }
 
-    /* iOS 27 LIQUID GLASS — exactly matching header capsule */
+    /* iOS 27 LIQUID GLASS — truly transparent on any background */
     .mobile-bottom-nav {
         display: flex;
         align-items: center;
@@ -2919,19 +2919,34 @@ img {
         user-select: none;
         -webkit-user-select: none;
         cursor: grab;
-        overflow: hidden; /* Same as header — clips caustics cleanly inside pill */
+        /* overflow: visible so mix-blend-mode: screen on ::before
+           can blend caustics with the actual page behind the bar.
+           On dark backgrounds: screen + dark = no effect (transparent).
+           On light backgrounds: screen + light = subtle highlights. */
+        overflow: visible;
 
-        /* Exact same glass tokens as .island-capsule header */
-        background: var(--lg-header-bg);
-        backdrop-filter: var(--lg-header-blur);
-        -webkit-backdrop-filter: var(--lg-header-blur);
-        border: 0.5px solid var(--lg-header-border);
-        box-shadow: var(--lg-header-shadow);
+        /* Almost invisible fill — let backdrop-filter do the work */
+        background: rgba(255, 255, 255, 0.07);
+
+        /* Same blur/saturate/brightness as header — low brightness */
+        backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
+        -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.04);
+
+        /* Hairline optical border */
+        border: 0.5px solid rgba(255, 255, 255, 0.35);
+
+        /* Specular inset rim — just a thin top-gloss line, same as header */
+        box-shadow:
+            0 10px 32px rgba(0, 0, 0, 0.07),
+            0 2px 8px rgba(0, 0, 0, 0.03),
+            inset 0 1px 0 rgba(255, 255, 255, 0.92),
+            inset 0 3px 4px -2px rgba(255, 255, 255, 0.35),
+            inset 0 -0.5px 0 rgba(255, 255, 255, 0.60);
 
         animation: mbnSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
     }
 
-    /* Corner caustic highlights — same values as .island-capsule::before */
+    /* Corner caustics — mix-blend-mode:screen auto-hides on dark backgrounds */
     .mobile-bottom-nav::before {
         content: '';
         position: absolute;
@@ -2945,7 +2960,7 @@ img {
         mix-blend-mode: screen;
     }
 
-    /* Narrow top gloss ribbon — same as .island-capsule::after */
+    /* Narrow top gloss ribbon */
     .mobile-bottom-nav::after {
         content: '';
         position: absolute;
@@ -2962,6 +2977,7 @@ img {
             rgba(255,255,255,0.10) 60%,
             rgba(255,255,255,0.00) 100%
         );
+        mix-blend-mode: screen;
     }
 
     .mobile-bottom-nav.is-dragging {

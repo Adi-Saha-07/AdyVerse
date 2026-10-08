@@ -1320,7 +1320,8 @@ img {
 
 .edu-editorial-card:hover .edu-card-bg .edu-cover-img {
     transform: scale(1.06);
-    filter: grayscale(85%) contrast(1.18) brightness(0.92);
+    filter: grayscale(85%) contrast(1.18) brightness(0.82);
+    /* No brightness glow on hover */
 }
 
 /* Authentic Dark Scrim Gradient */
@@ -1647,19 +1648,12 @@ img {
    â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .projects-editorial-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
-    align-items: stretch;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    width: 100%;
 }
 
-@media (max-width: 1240px) {
-    .projects-editorial-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-}
-
-@media (max-width: 680px) {
+@media (max-width: 768px) {
     .projects-editorial-grid {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -1670,20 +1664,22 @@ img {
     position: relative;
     border-radius: 26px;
     overflow: hidden;
-    min-height: 520px;
+    min-height: 420px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    box-shadow: 0 16px 38px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: #0d0e12;
+    background: rgba(14, 16, 22, 0.55);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+    border: 0.5px solid rgba(255, 255, 255, 0.28);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.18);
     transition: transform 0.4s var(--ease-editorial), box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .project-editorial-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 30px 64px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.18);
-    border-color: rgba(255, 255, 255, 0.4);
+    border-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 26px 56px rgba(0, 0, 0, 0.45), 0 6px 18px rgba(0, 0, 0, 0.22);
 }
 
 /* Full Bleed Background Media & Film Scrim */
@@ -1700,26 +1696,46 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
-    filter: grayscale(100%) contrast(1.12) brightness(0.82);
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+    object-position: top center;
+    filter: none;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-editorial-card:hover .proj-card-bg .proj-cover-img {
-    transform: scale(1.06);
-    filter: grayscale(85%) contrast(1.18) brightness(0.92);
+    transform: scale(1.04);
+    filter: none;
+    /* No background glow or brightness change on hover */
 }
 
-/* Authentic Dark Scrim Gradient â€” matching the reference image's deep contrast */
+/* Card Background Gradients (for fallback or text-first projects) */
+.proj-card-gradient {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.project-editorial-card:hover .proj-card-gradient {
+    transform: scale(1.05);
+}
+
+.proj-gradient-gradesync {
+    background: radial-gradient(circle at 75% 30%, rgba(245, 158, 11, 0.35) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(217, 119, 6, 0.20) 0%, transparent 55%),
+        linear-gradient(145deg, #18120a 0%, #0f0b06 50%, #060402 100%);
+}
+
+/* Authentic Dark Scrim Gradient — protects text readability over screenshots */
 .proj-card-scrim {
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg,
             rgba(0, 0, 0, 0.08) 0%,
-            rgba(0, 0, 0, 0.22) 30%,
-            rgba(0, 0, 0, 0.65) 60%,
-            rgba(0, 0, 0, 0.88) 82%,
-            rgba(0, 0, 0, 0.98) 100%);
+            rgba(0, 0, 0, 0.22) 28%,
+            rgba(0, 0, 0, 0.65) 58%,
+            rgba(0, 0, 0, 0.88) 80%,
+            rgba(0, 0, 0, 0.96) 100%);
     z-index: 2;
     pointer-events: none;
 }
@@ -1745,7 +1761,7 @@ img {
     backdrop-filter: blur(28px) saturate(180%) brightness(1.04);
     -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.04);
     color: #ffffff;
-    border: 0.5px solid rgba(255, 255, 255, 0.40);
+    border: 0.5px solid rgba(255, 255, 255, 0.45);
     font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1764,7 +1780,7 @@ img {
     background: rgba(255, 255, 255, 0.14);
     backdrop-filter: blur(28px) saturate(180%) brightness(1.04);
     -webkit-backdrop-filter: blur(28px) saturate(180%) brightness(1.04);
-    border: 0.5px solid rgba(255, 255, 255, 0.40);
+    border: 0.5px solid rgba(255, 255, 255, 0.45);
     color: #ffffff;
     display: inline-flex;
     align-items: center;
@@ -1783,16 +1799,24 @@ img {
     color: #0d0d0d;
     transform: rotate(45deg) scale(1.08);
     border-color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.30);
 }
 
-/* Card Content — Replicating the exact reference bottom typography */
+/* Card Content — Liquid glass tray with frosted blur */
 .proj-card-content {
     position: relative;
     z-index: 3;
-    padding: 28px 24px 24px;
+    padding: 26px 24px 22px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    background: linear-gradient(180deg,
+            rgba(10, 12, 18, 0.30) 0%,
+            rgba(8, 10, 16, 0.75) 45%,
+            rgba(6, 7, 12, 0.94) 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border-top: 0.5px solid rgba(255, 255, 255, 0.15);
 }
 
 .proj-meta-date {
@@ -1844,10 +1868,9 @@ img {
 }
 
 .project-editorial-card:hover .proj-tags-row span {
-    background: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.14);
     color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.55);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    border-color: rgba(255, 255, 255, 0.35);
 }
 
 /* Frosted glass action buttons */
@@ -1883,7 +1906,7 @@ img {
     background: #ffffff;
     color: #000000;
     transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(255, 255, 255, 0.32);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.24);
 }
 
 .proj-btn-glass {
@@ -1896,16 +1919,16 @@ img {
 }
 
 .proj-btn-glass:hover {
-    background: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.24);
     color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.75);
-    box-shadow: inset 0 1.5px 0 #ffffff, 0 6px 18px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.60);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ──────────────────────────────────────────────────────────────
    12. CERTIFICATIONS & LEADERSHIP
-   â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+   ────────────────────────────────────────────────────────────── */
 .cert-editorial-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

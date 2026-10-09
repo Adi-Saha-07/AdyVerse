@@ -19,10 +19,9 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- TagCanvas for interactive skill sphere -->
-    <script src="https://www.goat1000.com/tagcanvas.min.js"></script>
 
-    <link rel="stylesheet" href="Styles/style.css?v=12.5">
+
+    <link rel="stylesheet" href="Styles/style.css?v=13.3">
 </head>
 
 <body class="theme-monochrome">
@@ -449,86 +448,294 @@
         </section>
 
         <!-- ══════════════════════════════════════════════
-             SKILLS (CATEGORIZED + 3D SPHERE)
+             SKILLS (LIQUID GLASS BENTO MATRIX + MARQUEE)
         ══════════════════════════════════════════════ -->
         <section class="section-editorial" id="skills">
             <div class="container">
                 <div class="editorial-header">
                     <span class="ed-tag">/ 03 — CAPABILITIES</span>
                     <h2 class="ed-title">Technical <em>Stack</em></h2>
+                    <p class="skills-editorial-intro">
+                        A curated matrix of engineering skills, machine learning competencies, and generative AI tooling
+                        developed through practical, real-world deployment.
+                    </p>
                 </div>
 
-                <div class="skills-split-layout">
-                    <!-- Left: Categorized Pill Groups -->
-                    <div class="skills-categories">
-                        <div class="skill-group">
-                            <h4 class="skill-cat-title"><i class="fas fa-terminal"></i> Programming Languages</h4>
-                            <div class="pill-cloud">
-                                <span>Python</span><span>JavaScript
-                                    (ES6+)</span><span>C</span><span>C++</span><span>R</span><span>SQL</span><span>HTML5</span><span>CSS3</span>
-                            </div>
-                        </div>
+                <!-- Liquid Glass Filter Navigation -->
+                <div class="skills-filter-nav" role="tablist" aria-label="Filter skills by domain">
+                    <button class="glass-filter-btn active" data-filter="all" type="button">
+                        <i class="fas fa-layer-group"></i> All Capabilities
+                    </button>
+                    <button class="glass-filter-btn" data-filter="ai" type="button">
+                        <i class="fas fa-brain"></i> AI &amp; Machine Learning
+                    </button>
+                    <button class="glass-filter-btn" data-filter="languages" type="button">
+                        <i class="fas fa-code"></i> Core Languages
+                    </button>
+                    <button class="glass-filter-btn" data-filter="frontend" type="button">
+                        <i class="fas fa-laptop-code"></i> Frontend &amp; UI/UX
+                    </button>
+                    <button class="glass-filter-btn" data-filter="genai" type="button">
+                        <i class="fas fa-microchip"></i> GenAI &amp; Agents
+                    </button>
+                    <button class="glass-filter-btn" data-filter="tools" type="button">
+                        <i class="fas fa-screwdriver-wrench"></i> Cloud &amp; Tools
+                    </button>
+                </div>
 
-                        <div class="skill-group">
-                            <h4 class="skill-cat-title"><i class="fas fa-brain"></i> AI / ML &amp; Data Science</h4>
-                            <div class="pill-cloud">
-                                <span>Machine Learning</span><span>Deep Learning</span><span>Neural
-                                    Networks</span><span>NumPy</span><span>Pandas</span><span>Matplotlib</span><span>Seaborn</span>
-                            </div>
-                        </div>
+                <!-- Liquid Glass Bento Grid -->
+                <div class="skills-bento-grid">
 
-                        <div class="skill-group">
-                            <h4 class="skill-cat-title"><i class="fas fa-laptop-code"></i> Frontend &amp; Development
-                                Tools</h4>
-                            <div class="pill-cloud">
-                                <span>React.js</span><span>UI/UX Design</span><span>Responsive Web</span><span>VS
-                                    Code</span><span>Git &amp; GitHub</span><span>Vercel</span><span>MS Excel</span>
+                    <!-- Card 1: AI & ML Hero Card (Spans 7 cols) -->
+                    <article class="skill-glass-card hero-ai-card" data-category="ai">
+                        <div class="glass-specular-sheen" aria-hidden="true"></div>
+                        <div class="card-top-row">
+                            <div class="card-icon-bubble">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <span class="card-badge-pill featured">Core Specialization</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">AI, Machine Learning &amp; Data Science</h3>
+                            <p class="card-desc">
+                                Architecting predictive models, deep neural networks, and computer vision systems.
+                                Transforming raw, unstructured data into actionable intelligence with robust feature
+                                engineering.
+                            </p>
+                            <div class="skill-chips-cluster">
+                                <div class="glass-chip" title="Data Science & Modeling">
+                                    <i class="fab fa-python"></i>
+                                    <span>Python for AI</span>
+                                    <span class="chip-tag">Primary</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <span>Machine Learning</span>
+                                    <span class="chip-tag">Scikit-Learn</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-table-columns"></i>
+                                    <span>NumPy &amp; Pandas</span>
+                                    <span class="chip-tag">Data Ops</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-chart-pie"></i>
+                                    <span>Matplotlib &amp; Seaborn</span>
+                                    <span class="chip-tag">Analytics</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Computer Vision</span>
+                                    <span class="chip-tag">OpenCV</span>
+                                </div>
                             </div>
                         </div>
+                    </article>
 
-                        <div class="skill-group">
-                            <h4 class="skill-cat-title"><i class="fas fa-microchip"></i> GenAI &amp; Agentic Tools</h4>
-                            <div class="pill-cloud">
-                                <span>ChatGPT</span><span>Claude</span><span>Gemini</span><span>Perplexity</span><span>Antigravity</span><span>Prompt
-                                    Engineering</span>
+                    <!-- Card 2: Core Programming (Spans 5 cols) -->
+                    <article class="skill-glass-card" data-category="languages">
+                        <div class="glass-specular-sheen" aria-hidden="true"></div>
+                        <div class="card-top-row">
+                            <div class="card-icon-bubble">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                            <span class="card-badge-pill">Languages</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Core Programming &amp; Logic</h3>
+                            <p class="card-desc">
+                                Strong algorithmic foundation with deep knowledge of memory management, object-oriented
+                                paradigms, and database query structuring.
+                            </p>
+                            <div class="skill-chips-cluster">
+                                <div class="glass-chip">
+                                    <i class="fab fa-python"></i>
+                                    <span>Python 3.x</span>
+                                    <span class="chip-tag">Advanced</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fab fa-js"></i>
+                                    <span>JavaScript (ES6+)</span>
+                                    <span class="chip-tag">Modern</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-code"></i>
+                                    <span>C &amp; C++</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-database"></i>
+                                    <span>SQL / MySQL</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>R Language</span>
+                                    <span class="chip-tag">Stats</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fab fa-html5"></i>
+                                    <span>HTML5 &amp; CSS3</span>
+                                    <span class="chip-tag">Semantic</span>
+                                </div>
                             </div>
                         </div>
+                    </article>
+
+                    <!-- Card 3: Modern Frontend & UI/UX (Spans 4 cols) -->
+                    <article class="skill-glass-card" data-category="frontend">
+                        <div class="glass-specular-sheen" aria-hidden="true"></div>
+                        <div class="card-top-row">
+                            <div class="card-icon-bubble">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <span class="card-badge-pill">UI / UX</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Modern Frontend &amp; Interface Design</h3>
+                            <p class="card-desc">
+                                Engineering seamless, reactive web interfaces emphasizing fluid micro-interactions,
+                                responsive grids, and iOS-style liquid glass ergonomics.
+                            </p>
+                            <div class="skill-chips-cluster">
+                                <div class="glass-chip">
+                                    <i class="fas fa-droplet"></i>
+                                    <span>Liquid Glassmorphism</span>
+                                    <span class="chip-tag">Design</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-mobile-screen-button"></i>
+                                    <span>Responsive Web</span>
+                                    <span class="chip-tag">Mobile-1st</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-wand-magic-sparkles"></i>
+                                    <span>CSS Keyframe FX</span>
+                                    <span class="chip-tag">Smooth</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-layer-group"></i>
+                                    <span>Component Architecture</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: GenAI & Agentic Systems (Spans 4 cols) -->
+                    <article class="skill-glass-card" data-category="genai">
+                        <div class="glass-specular-sheen" aria-hidden="true"></div>
+                        <div class="card-top-row">
+                            <div class="card-icon-bubble">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <span class="card-badge-pill">Next-Gen</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">GenAI &amp; Agentic Workflows</h3>
+                            <p class="card-desc">
+                                Harnessing state-of-the-art multimodal LLMs, prompt chaining, reasoning graphs, and
+                                autonomous developer agents for enhanced velocity.
+                            </p>
+                            <div class="skill-chips-cluster">
+                                <div class="glass-chip">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Gemini API</span>
+                                    <span class="chip-tag">Multimodal</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-robot"></i>
+                                    <span>Claude &amp; ChatGPT</span>
+                                    <span class="chip-tag">Reasoning</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Perplexity &amp; RAG</span>
+                                    <span class="chip-tag">Search</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 5: Developer Tools & Cloud (Spans 4 cols) -->
+                    <article class="skill-glass-card" data-category="tools">
+                        <div class="glass-specular-sheen" aria-hidden="true"></div>
+                        <div class="card-top-row">
+                            <div class="card-icon-bubble">
+                                <i class="fas fa-screwdriver-wrench"></i>
+                            </div>
+                            <span class="card-badge-pill">Ecosystem</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Dev Workflow &amp; Cloud Deployment</h3>
+                            <p class="card-desc">
+                                Production tooling, version control, automated deployments, and reproducible
+                                environments that enable fast, reliable software delivery.
+                            </p>
+                            <div class="skill-chips-cluster">
+                                <div class="glass-chip">
+                                    <i class="fab fa-git-alt"></i>
+                                    <span>Git &amp; GitHub</span>
+                                    <span class="chip-tag">VCS</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-server"></i>
+                                    <span>Flask Framework</span>
+                                    <span class="chip-tag">REST APIs</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-laptop-code"></i>
+                                    <span>VS Code</span>
+                                    <span class="chip-tag">Workspace</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                    <span>Vercel &amp; Render</span>
+                                    <span class="chip-tag">Hosting</span>
+                                </div>
+                                <div class="glass-chip">
+                                    <i class="fas fa-file-excel"></i>
+                                    <span>MS Excel &amp; Analytics</span>
+                                    <span class="chip-tag">Modeling</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Liquid Glass Infinite Marquee Rail -->
+                <div class="skills-marquee-container" aria-label="Quick technology ticker">
+                    <div class="skills-marquee-label">
+                        <i class="fas fa-bolt"></i> Tech Ticker
                     </div>
-
-                    <!-- Right: Interactive 3D Sphere -->
-                    <div class="skills-canvas-card">
-                        <div class="sphere-wrapper">
-                            <canvas id="skillCanvas" width="460" height="460">
-                                Your browser does not support HTML5 Canvas.
-                            </canvas>
-                            <div id="tags" style="display:none;">
-                                <ul>
-                                    <li><a href="#">Python</a></li>
-                                    <li><a href="#">JavaScript</a></li>
-                                    <li><a href="#">Machine Learning</a></li>
-                                    <li><a href="#">C++</a></li>
-                                    <li><a href="#">Deep Learning</a></li>
-                                    <li><a href="#">React.js</a></li>
-                                    <li><a href="#">NumPy</a></li>
-                                    <li><a href="#">Pandas</a></li>
-                                    <li><a href="#">Matplotlib</a></li>
-                                    <li><a href="#">Seaborn</a></li>
-                                    <li><a href="#">MySQL</a></li>
-                                    <li><a href="#">GitHub</a></li>
-                                    <li><a href="#">VS Code</a></li>
-                                    <li><a href="#">Vercel</a></li>
-                                    <li><a href="#">ChatGPT</a></li>
-                                    <li><a href="#">Claude</a></li>
-                                    <li><a href="#">Gemini</a></li>
-                                    <li><a href="#">Neural Networks</a></li>
-                                    <li><a href="#">HTML5</a></li>
-                                    <li><a href="#">CSS3</a></li>
-                                    <li><a href="#">UI/UX</a></li>
-                                </ul>
-                            </div>
+                    <div class="skills-marquee-track">
+                        <div class="skills-marquee-content">
+                            <span class="marquee-item"><i class="fab fa-python"></i> Python 3</span>
+                            <span class="marquee-item"><i class="fas fa-brain"></i> Machine Learning</span>
+                            <span class="marquee-item"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="marquee-item"><i class="fas fa-table-cells"></i> Pandas &amp; NumPy</span>
+                            <span class="marquee-item"><i class="fas fa-server"></i> Flask</span>
+                            <span class="marquee-item"><i class="fas fa-database"></i> SQL</span>
+                            <span class="marquee-item"><i class="fas fa-wand-magic-sparkles"></i> Gemini AI</span>
+                            <span class="marquee-item"><i class="fab fa-git-alt"></i> Git &amp; GitHub</span>
+                            <span class="marquee-item"><i class="fas fa-chart-line"></i> Matplotlib</span>
+                            <span class="marquee-item"><i class="fas fa-code"></i> C / C++</span>
+                            <span class="marquee-item"><i class="fas fa-cloud"></i> Vercel</span>
+                        </div>
+                        <div class="skills-marquee-content" aria-hidden="true">
+                            <span class="marquee-item"><i class="fab fa-python"></i> Python 3</span>
+                            <span class="marquee-item"><i class="fas fa-brain"></i> Machine Learning</span>
+                            <span class="marquee-item"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="marquee-item"><i class="fas fa-table-cells"></i> Pandas &amp; NumPy</span>
+                            <span class="marquee-item"><i class="fas fa-server"></i> Flask</span>
+                            <span class="marquee-item"><i class="fas fa-database"></i> SQL</span>
+                            <span class="marquee-item"><i class="fas fa-wand-magic-sparkles"></i> Gemini AI</span>
+                            <span class="marquee-item"><i class="fab fa-git-alt"></i> Git &amp; GitHub</span>
+                            <span class="marquee-item"><i class="fas fa-chart-line"></i> Matplotlib</span>
+                            <span class="marquee-item"><i class="fas fa-code"></i> C / C++</span>
+                            <span class="marquee-item"><i class="fas fa-cloud"></i> Vercel</span>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -547,8 +754,8 @@
                     <!-- Project 1: AdyVerse -->
                     <article class="project-editorial-card">
                         <div class="proj-card-bg">
-                            <img src="Pictures/Projects/p1.png" alt="AdyVerse Portfolio Website"
-                                class="proj-cover-img" loading="lazy">
+                            <img src="Pictures/Projects/p1.png" alt="AdyVerse Portfolio Website" class="proj-cover-img"
+                                loading="lazy">
                             <div class="proj-card-scrim"></div>
                         </div>
                         <div class="proj-card-top">
@@ -636,7 +843,8 @@
                             <span class="proj-meta-date">Sep 2026 · Geospatial Intelligence</span>
                             <h3 class="proj-name">ORBIT — Satellite Change Detection</h3>
                             <p class="proj-summary">
-                                End-to-end GEOINT web app for bi-temporal satellite image change detection. Upload two captures at different timestamps and detect geographic changes using AI.
+                                End-to-end GEOINT web app for bi-temporal satellite image change detection. Upload two
+                                captures at different timestamps and detect geographic changes using AI.
                             </p>
                             <div class="proj-tags-row">
                                 <span>Python</span><span>Flask</span><span>Computer Vision</span><span>Render</span>
@@ -672,7 +880,8 @@
                             <span class="proj-meta-date">Aug 2026 · Multi-modal AI</span>
                             <h3 class="proj-name">BlackHole — AI Search Engine</h3>
                             <p class="proj-summary">
-                                Fast, modern web search and multi-modal AI engine. Combines real-time web results with AI reasoning for intelligent, context-aware answers.
+                                Fast, modern web search and multi-modal AI engine. Combines real-time web results with
+                                AI reasoning for intelligent, context-aware answers.
                             </p>
                             <div class="proj-tags-row">
                                 <span>Python</span><span>Flask</span><span>AI</span><span>Vercel</span>
@@ -693,8 +902,8 @@
                     <!-- Project 7: DeepThink Gen2 -->
                     <article class="project-editorial-card">
                         <div class="proj-card-bg">
-                            <img src="Pictures/Projects/deepthinkgen2.png" alt="DeepThink Gen2 — AI Personality Analyzer"
-                                class="proj-cover-img" loading="lazy">
+                            <img src="Pictures/Projects/deepthinkgen2.png"
+                                alt="DeepThink Gen2 — AI Personality Analyzer" class="proj-cover-img" loading="lazy">
                             <div class="proj-card-scrim"></div>
                         </div>
                         <div class="proj-card-top">
@@ -708,7 +917,8 @@
                             <span class="proj-meta-date">2026 · AI &amp; Psychology</span>
                             <h3 class="proj-name">DeepThink Gen2 — AI Personality Analyzer</h3>
                             <p class="proj-summary">
-                                Privacy-first AI personality analyzer powered by Google Gemini API. Features multi-category assessments and personalized AI-generated psychological insights.
+                                Privacy-first AI personality analyzer powered by Google Gemini API. Features
+                                multi-category assessments and personalized AI-generated psychological insights.
                             </p>
                             <div class="proj-tags-row">
                                 <span>Python</span><span>Flask</span><span>Gemini API</span><span>NLP</span>
@@ -740,7 +950,8 @@
                             <span class="proj-meta-date">2026 · AI Resume Intelligence</span>
                             <h3 class="proj-name">DeepScan — AI Resume Screener</h3>
                             <p class="proj-summary">
-                                AI-powered resume screener and ATS compatibility analyzer using NLP, TF-IDF, semantic matching, keyword gap analysis, and ATS risk detection.
+                                AI-powered resume screener and ATS compatibility analyzer using NLP, TF-IDF, semantic
+                                matching, keyword gap analysis, and ATS risk detection.
                             </p>
                             <div class="proj-tags-row">
                                 <span>Python</span><span>NLP</span><span>Machine Learning</span><span>TF-IDF</span>
@@ -771,7 +982,8 @@
                             <span class="proj-meta-date">2026 · Python &amp; Data</span>
                             <h3 class="proj-name">GradeSync — Academic Performance Tracker</h3>
                             <p class="proj-summary">
-                                Python-based academic performance tracking system. Helps students manage marks, calculate GPA/CGPA, and generate detailed performance reports efficiently.
+                                Python-based academic performance tracking system. Helps students manage marks,
+                                calculate GPA/CGPA, and generate detailed performance reports efficiently.
                             </p>
                             <div class="proj-tags-row">
                                 <span>Python</span><span>Data Analysis</span><span>CLI</span>
@@ -907,8 +1119,7 @@
                         <div class="ci-quick-details">
                             <div class="ci-item">
                                 <span class="ci-label">Email</span>
-                                <a href="mailto:adyverse07@gmail.com"
-                                    class="ci-link">adyverse07@gmail.com</a>
+                                <a href="mailto:adyverse07@gmail.com" class="ci-link">adyverse07@gmail.com</a>
                             </div>
 
                             <div class="ci-item">
@@ -1019,8 +1230,7 @@
                 <div class="footer-contact-col">
                     <span class="f-col-tag">/Contact</span>
                     <div class="footer-contact-details">
-                        <a href="mailto:adyverse07@gmail.com"
-                            class="f-mail-link">adyverse07@gmail.com</a>
+                        <a href="mailto:adyverse07@gmail.com" class="f-mail-link">adyverse07@gmail.com</a>
                         <p class="f-location-text">Delhi NCR &amp; West Bengal, India</p>
                     </div>
                 </div>
@@ -1068,7 +1278,7 @@
         </a>
     </nav>
 
-    <script src="Scripts/app.js?v=12.2"></script>
+    <script src="Scripts/app.js?v=13.0"></script>
 </body>
 
 </html>

@@ -573,47 +573,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ──────────────────────────────────────────────────────────────────────
-       6. 3D INTERACTIVE SKILLS SPHERE (TAGCANVAS)
+       6. LIQUID GLASS SKILLS INTERACTIVITY (FILTER TABS + SPECULAR SHEEN)
        ────────────────────────────────────────────────────────────────────── */
-    function startTagCanvas() {
-        if (!window.TagCanvas) return;
-        const canvas = document.getElementById('skillCanvas');
-        const wrapper = document.querySelector('.sphere-wrapper');
+    function initSkillsSection() {
+        const filterBtns = document.querySelectorAll('.glass-filter-btn');
+        const skillCards = document.querySelectorAll('.skill-glass-card');
 
-        // Dynamically compute canvas dimensions to ensure it never exceeds container
-        if (canvas && wrapper) {
-            const containerWidth = wrapper.clientWidth || (wrapper.parentElement ? wrapper.parentElement.clientWidth : 340);
-            const targetDim = Math.min(Math.max(containerWidth - 24, 260), 460);
-            canvas.width = targetDim;
-            canvas.height = targetDim;
-        }
+        // Category Filter Tabs
+        if (filterBtns.length > 0 && skillCards.length > 0) {
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
 
-        try {
-            TagCanvas.Start('skillCanvas', 'tags', {
-                textColour: '#0d0d0d',
-                textHeight: window.innerWidth <= 768 ? 14 : 20,
-                outlineColour: 'transparent',
-                depth: 0.92,
-                maxSpeed: 0.025,
-                minSpeed: 0.008,
-                decel: 0.98,
-                reverse: true,
-                wheelZoom: false,
-                shadow: 'rgba(0, 0, 0, 0.08)',
-                shadowBlur: 4,
-                initial: [0.08, -0.04],
-                fadeIn: 800,
-                noSelect: true
+                    // Active button state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Filter cards with smooth entrance
+                    skillCards.forEach(card => {
+                        const category = card.getAttribute('data-category');
+                        if (filter === 'all' || category === filter) {
+                            card.classList.remove('is-hidden');
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(12px) scale(0.98)';
+                            requestAnimationFrame(() => {
+                                card.style.transition = 'opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0) scale(1)';
+                            });
+                        } else {
+                            card.classList.add('is-hidden');
+                        }
+                    });
+                });
             });
-        } catch (e) {
-            console.warn('TagCanvas notice:', e);
         }
+
+        // Mouse Specular Sheen Tracking for Liquid Glass effect
+        skillCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.removeProperty('--mouse-x');
+                card.style.removeProperty('--mouse-y');
+            });
+        });
     }
-    // Run after full page load; fallback to DOMContentLoaded timing if load already fired
-    if (document.readyState === 'complete') {
-        startTagCanvas();
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSkillsSection);
     } else {
-        window.addEventListener('load', startTagCanvas);
+        initSkillsSection();
     }
 
 
